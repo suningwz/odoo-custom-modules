@@ -1,0 +1,25 @@
+<odoo>
+	<record id="invoice_stock_moves" model="ir.ui.view">
+	    <field name="name">stock.warehouse.related_stock_moves</field>
+	    <field name="model">stock.warehouse</field>
+	    <field name="inherit_id" ref="stock.view_warehouse"/>
+	    <field name="arch" type="xml">
+	        <xpath expr="/form/sheet/group/group/field[@name='code']" position="before">
+                <field name="x_warehouse_or_work" widget="radio" />
+                <field name="x_project_id" attrs="{'invisible':[('x_warehouse_or_work', '!=', 'obra')]}" />
+	        </xpath>
+	</record>
+</odoo>
+
+<!-- <xpath expr="/form/header/button[@name='action_invoice_open']" position="after">
+<button name="action_add_lines" string="Añadir produtos a factura" type="object" class="oe_highlight" states="draft"/>
+</xpath>
+</field> -->
+
+<!-- <record model="ir.ui.view" id="invoice_form_inherit">
+	<field name="name">account.invoice.form</field>
+	<field name="model">account.invoice</field>
+	<field name="inherit_id" ref="account.invoice_supplier_form"/>
+	<field name="arch" type="xml">
+	</field>
+</record> -->
