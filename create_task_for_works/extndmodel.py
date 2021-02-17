@@ -12,29 +12,24 @@ class Warehouse(models.Model):
     related_project_id = fields.Many2one('project.project',
         string="Nombre del proyecto", ondelete='set null')
 
-    @api.one
-    def create_related_project(self, related_name, related_partner):
-        rec = {
-        'name': vals['name'], ## Nombre del proyecto
-        'alias_contact': 'employees',
-        'privacy_visibility': 'employees',
-        'allow_timesheets': 'True',
-        'label_tasks': 'obra',
-        'related_stock_warehouse': self
-        }
-
-        if related_partner: rec['partner_id'] = related_partner
-        _logger.warning('\n\nWRITING NEW RECORD\nrec\n{}\n\n\n\nself\n{}\n\n\n\n'.format(rec, self))
-        project_obj = self.env['project.project'].create(rec)
-        return True
 
     @api.model
     def create(self, vals):
 
-        record = super(Warehouse, self).create(vals)
+        rec = {
+            'name': vals['name'], ## Nombre del proyecto
+            'alias_contact': 'employees',
+            'privacy_visibility': 'employees',
+            'allow_timesheets': 'True',
+            'label_tasks': 'obra'
+        }
 
-        record.create_related_project(vals['name'], vals['partner_id'])
-        return record
+        if vals['partner_id']: rec['partner_id'] = vals['partner_id']
+        project_obj = self.env['project.project'].create(rec)
+
+        vals['related_project_id'] = project_obj.id
+
+        return super(Warehouse, self).create(vals)
 
 class Project(models.Model):
     _inherit = 'project.project'

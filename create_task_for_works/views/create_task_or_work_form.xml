@@ -6,21 +6,8 @@
 	    <field name="arch" type="xml">
 	        <xpath expr="/form/sheet/group/group/field[@name='code']" position="before">
                 <field name="x_warehouse_or_work" widget="radio" />
-                <field name="related_project_id" attrs="{'invisible':[('related_project_id', '=', 'False')]}" readonly="1"/>
+                <field name="related_project_id" attrs="{'invisible':[('related_project_id', '=', False)]}" readonly="1"/>
 	        </xpath>
 		</field>
 	</record>
 </odoo>
-
-<!-- <xpath expr="/form/header/button[@name='action_invoice_open']" position="after">
-<button name="action_add_lines" string="Añadir produtos a factura" type="object" class="oe_highlight" states="draft"/>
-</xpath>
-</field> -->
-
-<!-- <record model="ir.ui.view" id="invoice_form_inherit">
-	<field name="name">account.invoice.form</field>
-	<field name="model">account.invoice</field>
-	<field name="inherit_id" ref="account.invoice_supplier_form"/>
-	<field name="arch" type="xml">
-	</field>
-</record> -->
