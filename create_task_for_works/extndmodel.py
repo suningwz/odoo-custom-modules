@@ -4,19 +4,51 @@ from odoo import api, fields, models
 import logging
 _logger = logging.getLogger(__name__)
 
-class Move(models.Model):
+class Warehouse(models.Model):
     _inherit = 'stock.warehouse'
 
+    x_warehouse_or_work = fields.Selection([('almacen','Almacén'),('obra','Obra')], string="Tipo de ubicación")
 
-    x_invoice_id = fields.Many2one('project.project',
-        string="Factura de referencia", ondelete='set null')
+    related_project_id = fields.Many2one('project.project',
+        string="Nombre del proyecto", ondelete='set null')
 
+    @api.one
+    def create_related_project(self, related_name, related_partner):
+        rec = {
+        'name': vals['name'], ## Nombre del proyecto
+        'alias_contact': 'employees',
+        'privacy_visibility': 'employees',
+        'allow_timesheets': 'True',
+        'label_tasks': 'obra',
+        'related_stock_warehouse': self
+        }
 
-class Invoice(models.Model):
+        if related_partner: rec['partner_id'] = related_partner
+        _logger.warning('\n\nWRITING NEW RECORD\nrec\n{}\n\n\n\nself\n{}\n\n\n\n'.format(rec, self))
+        project_obj = self.env['project.project'].create(rec)
+        return True
+
+    @api.model
+    def create(self, vals):
+
+        record = super(Warehouse, self).create(vals)
+
+        record.create_related_project(vals['name'], vals['partner_id'])
+        return record
+
+class Project(models.Model):
     _inherit = 'project.project'
 
-    related_stock_moves = fields.One2many('stock.warehouse',
-        'x_invoice_id', string="Movimiento asociado")
+    related_stock_warehouse = fields.One2many('stock.warehouse',
+        'related_project_id', string="Ubicación asociada")
+
+
+        # 'alias_defaults': ,
+        # 'alias_id': ,
+        # 'alias_model_id': ,
+        # 'analytic_account_id': ,
+        # 'company_id': ,
+
 
 
     # @api.multi

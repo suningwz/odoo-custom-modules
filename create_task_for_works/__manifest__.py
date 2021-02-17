@@ -6,8 +6,9 @@
 
     'description': """
         Añade una tarea nueva relacionada con la obra creada
-            En las facturas con proveedor podemos
-            seleccionar los movimientos asociados.
+            En la creacion de almacenes estos se
+            pueden configurar como obra y tendran
+            un proyecto asociado por defecto.
     """,
 
     'author': "Nacho",

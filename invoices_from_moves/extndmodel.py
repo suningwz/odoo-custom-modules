@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models
 
-import logging
-_logger = logging.getLogger(__name__)
 
 class Move(models.Model):
     _inherit = 'stock.move'

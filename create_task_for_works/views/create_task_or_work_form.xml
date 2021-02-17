@@ -6,8 +6,9 @@
 	    <field name="arch" type="xml">
 	        <xpath expr="/form/sheet/group/group/field[@name='code']" position="before">
                 <field name="x_warehouse_or_work" widget="radio" />
-                <field name="x_project_id" attrs="{'invisible':[('x_warehouse_or_work', '!=', 'obra')]}" />
+                <field name="related_project_id" attrs="{'invisible':[('related_project_id', '=', 'False')]}" readonly="1"/>
 	        </xpath>
+		</field>
 	</record>
 </odoo>
 
