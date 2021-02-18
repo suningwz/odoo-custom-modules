@@ -1,0 +1,368 @@
+<odoo>
+
+	<!-- EDIT VIEW FOR COLLABORATORS -->
+	<record id="lead_extension_collaborator" model="ir.ui.view">
+	    <field name="name">crm.lead.lead_extension_collaborator</field>
+	    <field name="model">crm.lead</field>
+	    <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+	    <field name="arch" type="xml">
+
+			<xpath expr="//button[@name='action_set_won_rainbowman']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//button[@name='163']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//button[@name='164']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='stage_id']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//button[@name='action_schedule_meeting']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//label[@for='name'][2]" position="attributes">
+					<attribute name="string">Comercial</attribute>
+			</xpath>
+			<xpath expr="//h2" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//group[@name='lead_partner']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//group[@name='opportunity_partner']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='date_deadline']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='priority']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='tag_ids']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='user_id']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='team_id']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//page[@name='lead']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+
+
+
+			<xpath expr="//group" position="inside">
+				<group colspan="2">
+					<field name="x_operator_tramit" invisible="1"/>
+				</group>
+
+				<group colspan="2">
+					<field name="x_charge_code" />
+					<field name="x_contract_type" required="1" widget="button"/>
+				</group>
+
+
+
+				<group colspan="2">
+					<field name="x_cif" attrs="{'required': [('x_contract_type', '=', 'empresa')], 'invisible':  [('x_contract_type', '!=', 'empresa')]}" />
+					<field name="x_company_name" attrs="{'required': [('x_contract_type', '=', 'empresa')], 'invisible':  [('x_contract_type', '!=', 'empresa')]}" />
+					<field name="x_nss" attrs="{'invisible':  [('x_contract_type', '!=', 'autonomo')]}" />
+					<field name="x_contract_file" />
+				</group>
+
+
+				<group colspan="2">
+					<field name="x_nif" attrs="{'required': [('x_contract_type', '!=', 'empresa')], 'invisible': [('x_contract_type', '=', 'empresa')]}"/>
+					<field name="x_client_name" attrs="{'required': [('x_contract_type', '!=', 'empresa')], 'invisible': [('x_contract_type', '=', 'empresa')]}"/>
+
+					<field name="x_aut_nif" attrs="{'required': [('x_contract_type', '=', 'empresa')], 'invisible': [('x_contract_type', '!=', 'empresa')]}"/>
+					<field name="x_aut_name" attrs="{'required': [('x_contract_type', '=', 'empresa')], 'invisible': [('x_contract_type', '!=', 'empresa')]}"/>
+
+					<field name="phone" string="Teléfono de contacto"/>
+					<field name="x_phone_2" />
+					<field name="email_from" />
+				</group>
+
+
+				<group colspan="2">
+					<field name="x_address_id" />
+					<label for="street" string="Address"/>
+                        <div class="o_address_format">
+                            <field name="street" placeholder=" " class="o_address_street"/>
+                            <field name="street2" placeholder=" " class="o_address_street"/>
+                            <field name="city" placeholder=" " class="o_address_city"/>
+                            <field name="state_id" class="o_address_state" placeholder=" " options="{'no_open': True}"/>
+                            <field name="zip" placeholder=" " class="o_address_zip"/>
+                        </div>
+				</group>
+
+
+				<group colspan="2">
+					<field name="x_bank_account" />
+				</group>
+
+
+				<group colspan="2">
+					<field name="x_internet_speed" />
+				</group>
+
+
+				<group>
+					<field name="x_one_pro" widget="one2many_checkboxes"/>
+				</group>
+
+
+				<group colspan="2">
+					<field name="x_tv" widget="one2many_checkboxes"/>
+				</group>
+
+
+				<group colspan="2">
+					<field name="x_promo" />
+					<field name="x_promo_price" />
+				</group>
+
+
+				<group colspan="2">
+					<field name="x_is_new" />
+
+					<field name="x_port_number" attrs="{'invisible': [('x_is_new', '!=', 'portabilidad')], 'required': [('x_is_new', '=', 'portabilidad')]}"/>
+					<field name="x_port_operator" attrs="{'invisible': [('x_is_new', '!=', 'portabilidad')], 'required': [('x_is_new', '=', 'portabilidad')]}"/>
+					<field name="x_port_new" attrs="{'invisible': [('x_is_new', '!=', 'portabilidad')]}"/>
+					<field name="x_port_nif" attrs="{'invisible': [('x_port_new', '!=', True)], 'required': [('x_port_new', '=', True)]}"/>
+					<field name="x_port_name" attrs="{'invisible': [('x_port_new', '!=', True)], 'required': [('x_port_new', '=', True)]}"/>
+				</group>
+
+
+				<group colspan="2">
+					<field name="x_dni_back" />
+				</group>
+
+
+				<group colspan="2">
+					<field name="x_lines_phone">
+						<tree editable="top">
+							<field name="x_status" readonly="1"/>
+							<field name="x_name" />
+							<field name="x_rate" />
+							<field name="x_terminal" />
+							<field name="x_is_prepaid" />
+							<field name="x_icc" attrs="{'invisible': [('x_is_prepaid', '!=', True)], 'required': [('x_is_prepaid', '=', True)]}"/>
+							<field name="x_different_partner" />
+							<field name="x_titular" attrs="{'invisible': [('x_different_partner', '!=', True)], 'required': [('x_different_partner', '=', True)]}"/>
+							<field name="x_nif" attrs="{'invisible': [('x_different_partner', '!=', True)], 'required': [('x_different_partner', '=', True)]}"/>
+							<field name="x_aspod" />
+						</tree>
+					</field>
+				</group>
+
+
+			</xpath>
+
+		</field>
+	</record>
+
+
+
+	<!-- CUSTOM VIEW FOR VALIDATORS -->
+	<!-- SHOULD ADAPT GROUPS CSV -->
+	<record id="lead_extension_validator" model="ir.ui.view">
+	    <field name="name">crm.lead.lead_extension_validator</field>
+	    <field name="model">crm.lead</field>
+		<field name="groups_id" eval="[(6, 0, [ref('__export__.res_groups_17_879d2718')])]"/>
+	    <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+	    <field name="arch" type="xml">
+			<field name="name" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_operator_tramit" position='attributes'>
+				<attribute name="readonly">1</attribute>
+				<attribute name="invisible">0</attribute>
+			</field>
+			<field name="x_contract_type" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_nss" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_nif" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_client_name" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="phone" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="email_from" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="street" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="street2" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="city" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="state_id" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="zip" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_cif" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_company_name" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_contract_file" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_aut_nif" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_aut_name" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="phone" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_phone_2" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="email_from" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="street" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="street2" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="city" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="state_id" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="zip" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_bank_account" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_internet_speed" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_one_pro" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_tv" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_promo" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_promo_price" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_is_new" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_port_number" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_port_operator" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_port_new" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_port_name" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_port_nif" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_dni_back" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_dni_back" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="description" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+
+			<field name="x_lines_phone" position='attributes'>
+				<attribute name="options">{'no_create': True}</attribute>
+			</field>
+			<xpath expr="//field[@name='stage_id']" position="attributes">
+					<attribute name="invisible">0</attribute>
+			</xpath>
+			<xpath expr="//tree/field[@name='x_name']" position="attributes">
+				<attribute name="readonly">1</attribute>
+			</xpath>
+			<xpath expr="//tree/field[@name='x_rate']" position="attributes">
+				<attribute name="readonly">1</attribute>
+			</xpath>
+			<xpath expr="//tree/field[@name='x_terminal']" position="attributes">
+				<attribute name="readonly">1</attribute>
+			</xpath>
+			<xpath expr="//tree/field[@name='x_is_prepaid']" position="attributes">
+				<attribute name="readonly">1</attribute>
+			</xpath>
+			<xpath expr="//tree/field[@name='x_icc']" position="attributes">
+				<attribute name="readonly">1</attribute>
+			</xpath>
+			<xpath expr="//tree/field[@name='x_different_partner']" position="attributes">
+				<attribute name="readonly">1</attribute>
+			</xpath>
+			<xpath expr="//tree/field[@name='x_titular']" position="attributes">
+				<attribute name="readonly">1</attribute>
+			</xpath>
+			<xpath expr="//tree/field[@name='x_nif']" position="attributes">
+				<attribute name="readonly">1</attribute>
+			</xpath>
+			<xpath expr="//tree/field[@name='x_aspod']" position="attributes">
+				<attribute name="readonly">1</attribute>
+			</xpath>
+		</field>
+	</record>
+
+
+
+	<!-- CUSTOM VIEW FOR ADMIN -->
+	<record id="lead_extension_admin" model="ir.ui.view">
+		<field name="name">crm.lead.lead_extension_admin</field>
+		<field name="model">crm.lead</field>
+		<field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]"/>
+		<field name="inherit_id" ref="crm.crm_lead_view_form"/>
+		<field name="arch" type="xml">
+			<field name="x_operator_tramit" position='attributes'>
+				<attribute name="readonly">0</attribute>
+				<attribute name="invisible">0</attribute>
+				<attribute name="widget">many2many_checkboxes</attribute>
+			</field>
+			  <xpath expr="//field[@name='x_internet_speed']" position="attributes">
+				<attribute name="widget">many2many_checkboxes</attribute>
+			  </xpath>
+			  <xpath expr="//field[@name='x_one_pro']" position="attributes">
+				<attribute name="widget">many2many_checkboxes</attribute>
+			  </xpath>
+			  <xpath expr="//field[@name='x_tv']" position="attributes">
+				<attribute name="widget">many2many_checkboxes</attribute>
+			  </xpath>
+		 </field>
+	</record>
+
+
+
+</odoo>

@@ -20,6 +20,7 @@
 					<button name="action_add_lines" string="Añadir a factura" type="object" class="oe_highlight" states="draft"/>
 				</page>
 	        </xpath>
+		</field>
 	</record>
 </odoo>
 
