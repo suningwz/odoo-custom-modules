@@ -54,6 +54,9 @@
 			</xpath>
 
 
+			<xpath expr="//button[@name='action_schedule_meeting']" position="before">
+					<field name="user_id" readonly="1"/>
+			</xpath>
 
 			<xpath expr="//group" position="inside">
 				<group colspan="2">
@@ -62,6 +65,7 @@
 
 				<group colspan="2">
 					<field name="x_charge_code" />
+					<field name="x_charge_zone" />
 					<field name="x_contract_type" required="1" widget="button"/>
 				</group>
 
@@ -90,13 +94,13 @@
 
 				<group colspan="2">
 					<field name="x_address_id" />
-					<label for="street" string="Address"/>
-                        <div class="o_address_format">
-                            <field name="street" placeholder=" " class="o_address_street"/>
-                            <field name="street2" placeholder=" " class="o_address_street"/>
-                            <field name="city" placeholder=" " class="o_address_city"/>
-                            <field name="state_id" class="o_address_state" placeholder=" " options="{'no_open': True}"/>
-                            <field name="zip" placeholder=" " class="o_address_zip"/>
+					<label for="street" string="Dirección"/>
+                        <div  class="o_address_format customaddress">
+                            <field name="street" placeholder="Calle" class="o_address_street"/>
+                            <field name="street2" placeholder="Calle 2" class="o_address_street"/>
+                            <field name="city" placeholder="Ciudad" class="o_address_city"/>
+                            <field name="state_id" class="o_address_state" placeholder="Provincia" options="{'no_open': True}"/>
+                            <field name="zip" placeholder="C.P." class="o_address_zip"/>
                         </div>
 				</group>
 
@@ -108,16 +112,19 @@
 
 				<group colspan="2">
 					<field name="x_internet_speed" />
-				</group>
-
-
-				<group>
-					<field name="x_one_pro" widget="one2many_checkboxes"/>
+					<field name="x_internet_speed_status" readonly="1"/>
 				</group>
 
 
 				<group colspan="2">
-					<field name="x_tv" widget="one2many_checkboxes"/>
+					<field name="x_one_pro" widget="many2many_checkboxes"/>
+					<field name="x_one_pro_status" readonly="1" />
+				</group>
+
+
+				<group colspan="2">
+					<field name="x_tv" widget="many2many_checkboxes"/>
+					<field name="x_tv_status" readonly="1" />
 				</group>
 
 
@@ -144,21 +151,22 @@
 
 
 				<group colspan="2">
-					<field name="x_lines_phone">
-						<tree editable="top">
-							<field name="x_status" readonly="1"/>
-							<field name="x_name" />
-							<field name="x_rate" />
-							<field name="x_terminal" />
-							<field name="x_is_prepaid" />
-							<field name="x_icc" attrs="{'invisible': [('x_is_prepaid', '!=', True)], 'required': [('x_is_prepaid', '=', True)]}"/>
-							<field name="x_different_partner" />
-							<field name="x_titular" attrs="{'invisible': [('x_different_partner', '!=', True)], 'required': [('x_different_partner', '=', True)]}"/>
-							<field name="x_nif" attrs="{'invisible': [('x_different_partner', '!=', True)], 'required': [('x_different_partner', '=', True)]}"/>
-							<field name="x_aspod" />
-						</tree>
-					</field>
+					<label for="x_lines_phone" />
 				</group>
+				<field name="x_lines_phone" nolabel="1">
+					<tree editable="top">
+						<field name="x_status" readonly="1"/>
+						<field name="x_name" />
+						<field name="x_rate" />
+						<field name="x_terminal" />
+						<field name="x_is_prepaid" />
+						<field name="x_icc" attrs="{'invisible': [('x_is_prepaid', '!=', True)], 'required': [('x_is_prepaid', '=', True)]}"/>
+						<field name="x_different_partner" />
+						<field name="x_titular" attrs="{'invisible': [('x_different_partner', '!=', True)], 'required': [('x_different_partner', '=', True)]}"/>
+						<field name="x_nif" attrs="{'invisible': [('x_different_partner', '!=', True)], 'required': [('x_different_partner', '=', True)]}"/>
+						<field name="x_aspod" />
+					</tree>
+				</field>
 
 
 			</xpath>
@@ -195,27 +203,27 @@
 			<field name="x_client_name" position='attributes'>
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="phone" position='attributes'>
+			<xpath expr="//group/field[@name='phone']" position="attributes">
 				<attribute name="readonly">1</attribute>
-			</field>
-			<field name="email_from" position='attributes'>
+			</xpath>
+			<xpath expr="//group/field[@name='email_from']" position="attributes">
 				<attribute name="readonly">1</attribute>
-			</field>
-			<field name="street" position='attributes'>
+			</xpath>
+			<xpath expr="//div[hasclass('customaddress')]/field[@name='street']" position="attributes">
 				<attribute name="readonly">1</attribute>
-			</field>
-			<field name="street2" position='attributes'>
+			</xpath>
+			<xpath expr="//div[hasclass('customaddress')]/field[@name='street2']" position="attributes">
 				<attribute name="readonly">1</attribute>
-			</field>
-			<field name="city" position='attributes'>
+			</xpath>
+			<xpath expr="//div[hasclass('customaddress')]/field[@name='city']" position="attributes">
 				<attribute name="readonly">1</attribute>
-			</field>
-			<field name="state_id" position='attributes'>
+			</xpath>
+			<xpath expr="//div[hasclass('customaddress')]/field[@name='state_id']" position="attributes">
 				<attribute name="readonly">1</attribute>
-			</field>
-			<field name="zip" position='attributes'>
+			</xpath>
+			<xpath expr="//div[hasclass('customaddress')]/field[@name='zip']" position="attributes">
 				<attribute name="readonly">1</attribute>
-			</field>
+			</xpath>
 			<field name="x_cif" position='attributes'>
 				<attribute name="readonly">1</attribute>
 			</field>
@@ -231,42 +239,42 @@
 			<field name="x_aut_name" position='attributes'>
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="phone" position='attributes'>
-				<attribute name="readonly">1</attribute>
-			</field>
 			<field name="x_phone_2" position='attributes'>
-				<attribute name="readonly">1</attribute>
-			</field>
-			<field name="email_from" position='attributes'>
-				<attribute name="readonly">1</attribute>
-			</field>
-			<field name="street" position='attributes'>
-				<attribute name="readonly">1</attribute>
-			</field>
-			<field name="street2" position='attributes'>
-				<attribute name="readonly">1</attribute>
-			</field>
-			<field name="city" position='attributes'>
-				<attribute name="readonly">1</attribute>
-			</field>
-			<field name="state_id" position='attributes'>
-				<attribute name="readonly">1</attribute>
-			</field>
-			<field name="zip" position='attributes'>
 				<attribute name="readonly">1</attribute>
 			</field>
 			<field name="x_bank_account" position='attributes'>
 				<attribute name="readonly">1</attribute>
 			</field>
+
 			<field name="x_internet_speed" position='attributes'>
 				<attribute name="readonly">1</attribute>
+				<attribute name="widget">one2many_list</attribute>
+			</field>
+			<field name="x_internet_speed_status" position='attributes'>
+				<attribute name="readonly">0</attribute>
 			</field>
 			<field name="x_one_pro" position='attributes'>
 				<attribute name="readonly">1</attribute>
+				<attribute name="widget">one2many_list</attribute>
+			</field>
+			<field name="x_one_pro" position='inside'>
+				<tree editable="bottom" >
+					<field name="name" />
+					<field name="code" />
+				</tree>
+			</field>
+			<field name="x_one_pro_status" position='attributes'>
+				<attribute name="readonly">0</attribute>
 			</field>
 			<field name="x_tv" position='attributes'>
 				<attribute name="readonly">1</attribute>
+				<attribute name="widget">one2many_list</attribute>
 			</field>
+			<field name="x_tv_status" position='attributes'>
+				<attribute name="readonly">0</attribute>
+			</field>
+
+
 			<field name="x_promo" position='attributes'>
 				<attribute name="readonly">1</attribute>
 			</field>
@@ -302,10 +310,14 @@
 			</field>
 
 			<field name="x_lines_phone" position='attributes'>
-				<attribute name="options">{'no_create': True}</attribute>
+				<attribute name="options">{'create': False}</attribute>
 			</field>
 			<xpath expr="//field[@name='stage_id']" position="attributes">
 					<attribute name="invisible">0</attribute>
+					<attribute name="readonly">0</attribute>
+			</xpath>
+			<xpath expr="//tree/field[@name='x_status']" position="attributes">
+				<attribute name="readonly">0</attribute>
 			</xpath>
 			<xpath expr="//tree/field[@name='x_name']" position="attributes">
 				<attribute name="readonly">1</attribute>
@@ -349,16 +361,16 @@
 			<field name="x_operator_tramit" position='attributes'>
 				<attribute name="readonly">0</attribute>
 				<attribute name="invisible">0</attribute>
-				<attribute name="widget">many2many_checkboxes</attribute>
+				<attribute name="widget">one2many_checkboxes</attribute>
 			</field>
 			  <xpath expr="//field[@name='x_internet_speed']" position="attributes">
-				<attribute name="widget">many2many_checkboxes</attribute>
+				<attribute name="widget">one2many_checkboxes</attribute>
 			  </xpath>
 			  <xpath expr="//field[@name='x_one_pro']" position="attributes">
-				<attribute name="widget">many2many_checkboxes</attribute>
+				<attribute name="widget">one2many_checkboxes</attribute>
 			  </xpath>
 			  <xpath expr="//field[@name='x_tv']" position="attributes">
-				<attribute name="widget">many2many_checkboxes</attribute>
+				<attribute name="widget">one2many_checkboxes</attribute>
 			  </xpath>
 		 </field>
 	</record>

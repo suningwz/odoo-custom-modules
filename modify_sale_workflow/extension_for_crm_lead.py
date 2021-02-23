@@ -16,10 +16,13 @@ class Lead(models.Model):
 
     # B A requires validation (IBAN + ACC)
     x_bank_account = fields.Char(
-        string="NIF del autorizado", store=True, size=24)
+        string="IBAN", store=True, size=24)
 
     x_charge_code = fields.Char(
         string="Código de carga", store=True)
+    x_charge_zone = fields.Selection(
+        [('SUR','SUR'), ('LEVANTE','LEVANTE'), ('CENTRO','CENTRO'), ('NORESTE','NORESTE'), ('NORTE','NORTE'), ('CANARIAS','CANARIAS')],
+        string="Zona de carga", store=True)
     x_cif = fields.Char(
         string="CIF", store=True)
     x_client_name = fields.Char(
@@ -71,18 +74,38 @@ class Lead(models.Model):
         string="Velocidad de internet",
         ondelete="set null",
         store=True)
+    x_internet_speed_status = fields.Selection(
+        [('CANCELACION', 'CANCELACION CLIENTE KO COMERCIAL'), ('FIANZA', 'FIANZA'), ('PROGRAMADO', 'PROGRAMADO'), ('ERROR', 'ERROR PORTABILIDAD FIJO'), ('PDTEPROGRAMAR', 'PDTE DE PROGRAMAR'), ('PDTEAPORTAR DOC PARA E7', 'PDTE DE APORTAR DOC PARA E7'), ('IUAE', 'FALTA IUAE'), ('ILOCALIZABLE', 'ILOCALIZABLE')],
+        string="Estado", store=True)
 
-    x_one_pro = fields.Many2one(
+
+
+    x_one_pro = fields.Many2many(
         'custom.one_pro',
         string="Productos ONE Profesional",
-        ondelete="set null",
         store=True)
+    x_one_pro_status = fields.Selection(
+        [('CANCELACION', 'CANCELACION CLIENTE KO COMERCIAL'), ('FIANZA', 'FIANZA'), ('PROGRAMADO', 'PROGRAMADO'), ('ERROR', 'ERROR PORTABILIDAD FIJO'), ('PDTEPROGRAMAR', 'PDTE DE PROGRAMAR'), ('PDTEAPORTAR DOC PARA E7', 'PDTE DE APORTAR DOC PARA E7'), ('IUAE', 'FALTA IUAE'), ('ILOCALIZABLE', 'ILOCALIZABLE')],
+        string="Estado One Pro", store=True)
 
-    x_tv = fields.Many2one(
+    x_tv = fields.Many2many(
         'custom.vf_tv',
         string="Vodafone TV",
-        ondelete="set null",
         store=True)
+    x_tv_status = fields.Selection(
+        [('CANCELACION', 'CANCELACION CLIENTE KO COMERCIAL'), ('FIANZA', 'FIANZA'), ('PROGRAMADO', 'PROGRAMADO'), ('ERROR', 'ERROR PORTABILIDAD FIJO'), ('PDTEPROGRAMAR', 'PDTE DE PROGRAMAR'), ('PDTEAPORTAR DOC PARA E7', 'PDTE DE APORTAR DOC PARA E7'), ('IUAE', 'FALTA IUAE'), ('ILOCALIZABLE', 'ILOCALIZABLE')],
+        string="Estado TV", store=True)
+    # x_one_pro = fields.Many2one(
+    #     'custom.one_pro',
+    #     string="Productos ONE Profesional",
+    #     ondelete="set null",
+    #     store=True)
+    #
+    # x_tv = fields.Many2one(
+    #     'custom.vf_tv',
+    #     string="Vodafone TV",
+    #     ondelete="set null",
+    #     store=True)
 
     x_lines_phone = fields.One2many(
         'custom.phone_line',
@@ -121,24 +144,32 @@ class PhoneLines(models.Model):
 
 class OnePro(models.Model):
     _name = 'custom.one_pro'
+    _description = 'Productos One Pro'
 
-    x_name = fields.Char(string='Nombre', store=True)
+
+    name = fields.Char(string='Nombre', store=True)
+    code = fields.Char(string='Código Interno', store=True)
 
 
 class VFTV(models.Model):
     _name = 'custom.vf_tv'
+    _description = 'Productos Vodafone TV'
 
-    x_name = fields.Char(string='Nombre', store=True)
+    name = fields.Char(string='Nombre', store=True)
+    code = fields.Char(string='Código Interno', store=True)
 
 
 class OperatorTramit(models.Model):
     _name = 'custom.operator_tramit'
+    _description = 'Operadores tramitables'
 
-    x_name = fields.Char(string='Nombre', store=True)
+    name = fields.Char(string='Nombre', store=True)
+    code = fields.Char(string='Código Interno', store=True)
 
 
 class InternetSpeed(models.Model):
     _name = 'custom.internet_speed'
+    _description = 'Velocidades de Internet'
 
-    x_name = fields.Char(string='Nombre', store=True)
-    x_code = fields.Char(string='Código Interno', store=True)
+    name = fields.Char(string='Nombre', store=True)
+    code = fields.Char(string='Código Interno', store=True)
