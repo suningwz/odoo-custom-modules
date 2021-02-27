@@ -104,61 +104,11 @@ class Lead(models.Model):
     x_tv_status = fields.Selection(
         [('CANCELACION', 'CANCELACION CLIENTE KO COMERCIAL'), ('FIANZA', 'FIANZA'), ('PROGRAMADO', 'PROGRAMADO'), ('ERROR', 'ERROR PORTABILIDAD FIJO'), ('PDTEPROGRAMAR', 'PDTE DE PROGRAMAR'), ('PDTEAPORTAR DOC PARA E7', 'PDTE DE APORTAR DOC PARA E7'), ('IUAE', 'FALTA IUAE'), ('ILOCALIZABLE', 'ILOCALIZABLE')],
         string="Estado TV", store=True)
-    # x_one_pro = fields.Many2one(
-    #     'custom.one_pro',
-    #     string="Productos ONE Profesional",
-    #     ondelete="set null",
-    #     store=True)
-    #
-    # x_tv = fields.Many2one(
-    #     'custom.vf_tv',
-    #     string="Vodafone TV",
-    #     ondelete="set null",
-    #     store=True)
-
     x_lines_phone = fields.One2many(
         'custom.phone_line',
         'x_lead_id',
         string="Líneas Adicionales",
         store=True)
-
-## TODO
-    @api.constrains('x_ba_iban')
-    def check_name(self):
-        """ make sure IBAN is 4 digits"""
-        for rec in self:
-            if len(rec.name) != 4:
-                raise exceptions.ValidationError(_('El IBAN debe tener 4 dígitos.'))
-
-    @api.constrains('x_ba_entity')
-    def check_name(self):
-        """ make sure entity is 4 digits"""
-        for rec in self:
-            if len(rec.name) != 4:
-                raise exceptions.ValidationError(_('La entidad debe tener 4 dígitos.'))
-
-    @api.constrains('x_ba_number')
-    def check_name(self):
-        """ make sure ba is 10 digits"""
-        for rec in self:
-            if len(rec.name) != 10:
-                raise exceptions.ValidationError(_('La cuenta debe tener 10 dígitos.'))
-
-    @api.constrains('x_ba_control')
-    def check_name(self):
-        """ make sure control number is 2 digits"""
-        for rec in self:
-            if len(rec.name) != 2:
-                raise exceptions.ValidationError(_('El código de control debe tener 2 dígitos.'))
-
-    @api.constrains('x_ba_sucursal')
-    def check_name(self):
-        """ make sure sucursal is 4 digits"""
-        for rec in self:
-            if len(rec.name) != 4:
-                raise exceptions.ValidationError(_('El código de sucursal debe tener 4 dígitos.'))
-
-
 
 
 class PhoneLines(models.Model):
