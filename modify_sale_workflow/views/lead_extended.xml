@@ -105,9 +105,20 @@
 				</group>
 
 
-				<group colspan="2">
-					<field name="x_bank_account" />
+				<group col="6" colspan="2">
+					<label for="x_ba_iban"/>
+					<label for="x_ba_entity"/>
+					<label for="x_ba_sucursal"/>
+					<label for="x_ba_control"/>
+					<label for="x_ba_number" colspan="2"/>
+
+					<field name="x_ba_iban" nolabel="1"/>
+					<field name="x_ba_entity" nolabel="1"/>
+					<field name="x_ba_sucursal" nolabel="1"/>
+					<field name="x_ba_control" nolabel="1"/>
+					<field name="x_ba_number" nolabel="1" colspan="2"/>
 				</group>
+
 
 
 				<group colspan="2">
@@ -242,7 +253,19 @@
 			<field name="x_phone_2" position='attributes'>
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_bank_account" position='attributes'>
+			<field name="x_ba_number" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_ba_iban" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_ba_entity" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_ba_sucursal" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_ba_control" position='attributes'>
 				<attribute name="readonly">1</attribute>
 			</field>
 
@@ -363,6 +386,13 @@
 				<attribute name="invisible">0</attribute>
 				<attribute name="widget">one2many_checkboxes</attribute>
 			</field>
+			<xpath expr="//field[@name='stage_id']" position="attributes">
+					<attribute name="invisible">0</attribute>
+					<attribute name="readonly">0</attribute>
+			</xpath>
+			<xpath expr="//tree/field[@name='x_status']" position="attributes">
+				<attribute name="readonly">0</attribute>
+			</xpath>
 			  <xpath expr="//field[@name='x_internet_speed']" position="attributes">
 				<attribute name="widget">one2many_checkboxes</attribute>
 			  </xpath>

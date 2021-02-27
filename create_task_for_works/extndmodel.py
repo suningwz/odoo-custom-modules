@@ -25,8 +25,7 @@ class Warehouse(models.Model):
         }
 
         if vals['partner_id']: rec['partner_id'] = vals['partner_id']
-        # project_obj = self.sudo().env['project.project'].create(rec)
-        # project_obj = self.env['project.project'].sudo().create(rec) ## Which one is valid?
+        project_obj = self.env['project.project'].sudo().create(rec)
 
         vals['related_project_id'] = project_obj.id
 

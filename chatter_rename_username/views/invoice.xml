@@ -1,0 +1,38 @@
+<odoo>
+	<record id="invoice_stock_moves" model="ir.ui.view">
+	    <field name="name">account.invoice.related_stock_moves</field>
+	    <field name="model">account.invoice</field>
+	    <field name="inherit_id" ref="account.invoice_supplier_form"/>
+	    <field name="arch" type="xml">
+	        <xpath expr="//page" position="after">
+				<page string="Movimientos asociados" attrs="{'invisible': [('partner_id', '=', False)]}">
+					<field name="related_stock_moves" widget="many2many" options="{'no_create': True}" domain="['&amp;', ('state','=','done'), ('picking_partner_id','=',context.get('partner_id')), '&amp;', ('x_invoice_id','=',False)]" attrs="{'readonly':[('state','not in',('draft',))]}">
+					  <tree>
+						<field name="state" invisible="1"/>
+						<field name="date" />
+						<field name="picking_partner_id" invisible="1"/>
+						<field name="reference" />
+						<field name="product_id" />
+						<field name="product_uom_qty" string="Cantidad" />
+						<field name="product_uom" />
+					  </tree>
+					</field>
+					<button name="action_add_lines" string="Añadir a factura" type="object" class="oe_highlight" states="draft"/>
+				</page>
+	        </xpath>
+		</field>
+	</record>
+</odoo>
+
+<!-- <xpath expr="/form/header/button[@name='action_invoice_open']" position="after">
+<button name="action_add_lines" string="Añadir produtos a factura" type="object" class="oe_highlight" states="draft"/>
+</xpath>
+</field> -->
+
+<!-- <record model="ir.ui.view" id="invoice_form_inherit">
+	<field name="name">account.invoice.form</field>
+	<field name="model">account.invoice</field>
+	<field name="inherit_id" ref="account.invoice_supplier_form"/>
+	<field name="arch" type="xml">
+	</field>
+</record> -->
