@@ -3,7 +3,8 @@
 	<record id="extension_for_product_price" model="ir.ui.view">
 	    <field name="name">product.product.extension_for_product_price</field>
 	    <field name="model">product.product</field>
-	    <field name="inherit_id" ref="product.product_template_only_form_view"/>
+    <!-- <field name="inherit_id" ref="product.product_template_only_form_view"/> -->
+	    <field name="inherit_id" ref="product.product_template_form_view"/>
 	    <field name="arch" type="xml">
 
 			<xpath expr="//page[@name='variants']" position="before">
