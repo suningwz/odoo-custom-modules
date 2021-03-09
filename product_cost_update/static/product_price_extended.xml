@@ -1,0 +1,31 @@
+<odoo>
+
+	<record id="extension_for_product_price" model="ir.ui.view">
+	    <field name="name">product.product.extension_for_product_price</field>
+	    <field name="model">product.product</field>
+	    <field name="inherit_id" ref="product.product_template_only_form_view"/>
+	    <field name="arch" type="xml">
+
+			<xpath expr="//page[@name='variants']" position="before">
+
+				<group string="Historial de precios" col="6">
+
+					<field name="x_old_price_1_date" readonly="1"/>
+					<field name="x_old_price_1_supplier" readonly="1"/>
+					<field name="x_old_price_1_price" readonly="1"/>
+
+					<field name="x_old_price_2_date" readonly="1"/>
+					<field name="x_old_price_2_supplier" readonly="1"/>
+					<field name="x_old_price_2_price" readonly="1"/>
+
+					<field name="x_old_price_3_date" readonly="1"/>
+					<field name="x_old_price_3_supplier" readonly="1"/>
+					<field name="x_old_price_3_price" readonly="1"/>
+				</group>
+
+			</xpath>
+
+		</field>
+	</record>
+
+</odoo>
