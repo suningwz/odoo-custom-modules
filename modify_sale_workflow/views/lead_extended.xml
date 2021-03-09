@@ -165,7 +165,7 @@
 				<group colspan="2">
 					<label for="x_lines_phone" />
 				</group>
-				<field name="x_lines_phone" nolabel="1">
+				<field name="x_lines_phone" nolabel="1" attrs="{'invisible':[('x_internet_speed','not in',(6,7,8))]}">
 					<tree editable="top">
 						<field name="x_status" readonly="1"/>
 						<field name="x_name" />
