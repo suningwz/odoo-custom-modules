@@ -66,25 +66,27 @@
 				<group colspan="2">
 					<field name="x_charge_code" />
 					<field name="x_charge_zone" />
-					<field name="x_contract_type" required="1" widget="button"/>
+					<field name="x_address_id" />
+					<field name="x_contract_type_2" required="1" widget="selection"/>
+					<field name="x_contract_type" required="1" widget="selection"/>
 				</group>
 
 
 
 				<group colspan="2">
-					<field name="x_cif" attrs="{'required': [('x_contract_type', '=', 'empresa')], 'invisible':  [('x_contract_type', '!=', 'empresa')]}" />
-					<field name="x_company_name" attrs="{'required': [('x_contract_type', '=', 'empresa')], 'invisible':  [('x_contract_type', '!=', 'empresa')]}" />
-					<field name="x_nss" attrs="{'invisible':  [('x_contract_type', '!=', 'autonomo')]}" />
-					<field name="x_contract_file" />
+					<field name="x_cif" attrs="{'required': [('x_contract_type_2', '=', 'empresa')], 'invisible':  [('x_contract_type_2', '!=', 'empresa')]}" />
+					<field name="x_company_name" attrs="{'required': [('x_contract_type_2', '=', 'empresa')], 'invisible':  [('x_contract_type_2', '!=', 'empresa')]}" />
+					<field name="x_nss" attrs="{'invisible':  [('x_contract_type_2', '!=', 'autonomo')]}" />
+					<!-- <field name="x_contract_file" /> -->
 				</group>
 
 
 				<group colspan="2">
-					<field name="x_nif" attrs="{'required': [('x_contract_type', '!=', 'empresa')], 'invisible': [('x_contract_type', '=', 'empresa')]}"/>
-					<field name="x_client_name" attrs="{'required': [('x_contract_type', '!=', 'empresa')], 'invisible': [('x_contract_type', '=', 'empresa')]}"/>
+					<field name="x_nif" attrs="{'required': [('x_contract_type_2', '!=', 'empresa')], 'invisible': [('x_contract_type_2', '=', 'empresa')]}"/>
+					<field name="x_client_name" attrs="{'required': [('x_contract_type_2', '!=', 'empresa')], 'invisible': [('x_contract_type_2', '=', 'empresa')]}"/>
 
-					<field name="x_aut_nif" attrs="{'required': [('x_contract_type', '=', 'empresa')], 'invisible': [('x_contract_type', '!=', 'empresa')]}"/>
-					<field name="x_aut_name" attrs="{'required': [('x_contract_type', '=', 'empresa')], 'invisible': [('x_contract_type', '!=', 'empresa')]}"/>
+					<field name="x_aut_nif" attrs="{'required': [('x_contract_type_2', '=', 'empresa')], 'invisible': [('x_contract_type_2', '!=', 'empresa')]}"/>
+					<field name="x_aut_name" attrs="{'required': [('x_contract_type_2', '=', 'empresa')], 'invisible': [('x_contract_type_2', '!=', 'empresa')]}"/>
 
 					<field name="phone" string="Teléfono de contacto"/>
 					<field name="x_phone_2" />
@@ -93,7 +95,6 @@
 
 
 				<group colspan="2">
-					<field name="x_address_id" />
 					<label for="street" string="Dirección"/>
                         <div  class="o_address_format customaddress">
                             <field name="street" placeholder="Calle" class="o_address_street"/>
@@ -195,23 +196,23 @@
 		<field name="groups_id" eval="[(6, 0, [ref('__export__.res_groups_17_879d2718')])]"/>
 	    <field name="inherit_id" ref="crm.crm_lead_view_form"/>
 	    <field name="arch" type="xml">
-			<field name="name" position='attributes'>
+			<field name="name" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_operator_tramit" position='attributes'>
+			<field name="x_operator_tramit" position="attributes">
 				<attribute name="readonly">1</attribute>
 				<attribute name="invisible">0</attribute>
 			</field>
-			<field name="x_contract_type" position='attributes'>
+			<field name="x_contract_type_2" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_nss" position='attributes'>
+			<field name="x_nss" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_nif" position='attributes'>
+			<field name="x_nif" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_client_name" position='attributes'>
+			<field name="x_client_name" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
 			<xpath expr="//group/field[@name='phone']" position="attributes">
@@ -235,104 +236,110 @@
 			<xpath expr="//div[hasclass('customaddress')]/field[@name='zip']" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</xpath>
-			<field name="x_cif" position='attributes'>
+			<field name="x_cif" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_company_name" position='attributes'>
+			<field name="x_company_name" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_contract_file" position='attributes'>
+			<!-- <field name="x_contract_file" position='attributes'>
+				<attribute name="readonly">1</attribute>
+			</field> -->
+			<field name="x_aut_nif" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_aut_nif" position='attributes'>
+			<field name="x_aut_name" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_aut_name" position='attributes'>
+			<field name="x_phone_2" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_phone_2" position='attributes'>
+			<field name="x_ba_number" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_ba_number" position='attributes'>
+			<field name="x_ba_iban" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_ba_iban" position='attributes'>
+			<field name="x_ba_entity" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_ba_entity" position='attributes'>
+			<field name="x_ba_sucursal" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_ba_sucursal" position='attributes'>
-				<attribute name="readonly">1</attribute>
-			</field>
-			<field name="x_ba_control" position='attributes'>
+			<field name="x_ba_control" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
 
-			<field name="x_internet_speed" position='attributes'>
+			<field name="x_internet_speed" position="attributes">
 				<attribute name="readonly">1</attribute>
 				<attribute name="widget">one2many_list</attribute>
 			</field>
-			<field name="x_internet_speed_status" position='attributes'>
-				<attribute name="readonly">0</attribute>
+			<field name="x_internet_speed_status" position="attributes">
+				<attribute name="invisible">1</attribute>
 			</field>
-			<field name="x_one_pro" position='attributes'>
+			<field name="x_one_pro" position="attributes">
 				<attribute name="readonly">1</attribute>
 				<attribute name="widget">one2many_list</attribute>
 			</field>
-			<field name="x_one_pro" position='inside'>
-				<tree editable="bottom" >
-					<field name="name" />
-					<field name="code" />
+			<field name="x_one_pro" position="inside">
+				<tree editable="bottom">
+					<field name="name"/>
+					<field name="code"/>
 				</tree>
 			</field>
-			<field name="x_one_pro_status" position='attributes'>
-				<attribute name="readonly">0</attribute>
+			<field name="x_one_pro_status" position="attributes">
+				<attribute name="invisible">1</attribute>
 			</field>
-			<field name="x_tv" position='attributes'>
+			<field name="x_tv" position="attributes">
 				<attribute name="readonly">1</attribute>
 				<attribute name="widget">one2many_list</attribute>
 			</field>
-			<field name="x_tv_status" position='attributes'>
-				<attribute name="readonly">0</attribute>
+			<field name="x_tv" position="inside">
+				<tree editable="bottom">
+					<field name="name"/>
+					<field name="code"/>
+				</tree>
+			</field>
+			<field name="x_tv_status" position="attributes">
+				<attribute name="invisible">1</attribute>
 			</field>
 
 
-			<field name="x_promo" position='attributes'>
+			<field name="x_promo" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_promo_price" position='attributes'>
+			<field name="x_promo_price" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_is_new" position='attributes'>
+			<field name="x_is_new" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_port_number" position='attributes'>
+			<field name="x_port_number" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_port_operator" position='attributes'>
+			<field name="x_port_operator" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_port_new" position='attributes'>
+			<field name="x_port_new" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_port_name" position='attributes'>
+			<field name="x_port_name" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_port_nif" position='attributes'>
+			<field name="x_port_nif" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_dni_back" position='attributes'>
+			<field name="x_dni_back" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_dni_back" position='attributes'>
+			<field name="x_dni_back" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="description" position='attributes'>
+			<field name="description" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
 
-			<field name="x_lines_phone" position='attributes'>
+			<field name="x_lines_phone" position="attributes">
 				<attribute name="options">{'create': False}</attribute>
 			</field>
 			<xpath expr="//field[@name='stage_id']" position="attributes">
@@ -340,7 +347,7 @@
 					<attribute name="readonly">0</attribute>
 			</xpath>
 			<xpath expr="//tree/field[@name='x_status']" position="attributes">
-				<attribute name="readonly">0</attribute>
+				<attribute name="readonly">1</attribute>
 			</xpath>
 			<xpath expr="//tree/field[@name='x_name']" position="attributes">
 				<attribute name="readonly">1</attribute>

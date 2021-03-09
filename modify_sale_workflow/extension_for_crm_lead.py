@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models
 #
-# import logging
-# _logger = logging.getLogger(__name__)
+import logging
+_logger = logging.getLogger(__name__)
 #
 class Lead(models.Model):
     _inherit = 'crm.lead'
@@ -52,14 +52,21 @@ class Lead(models.Model):
     x_port_new = fields.Boolean(
         string="Diferente Titular", store=True,
         help="Marca esta casilla si el titular de la línea a portar es diferente")
-    x_contract_file = fields.Binary(
-        string="Contrato de referencia", store=True)
-    x_contract_type = fields.Selection(
-        [('autonomo','Autónomo'), ('empresa', 'Empresa'), ('particular', 'Particular')],
-        string="Tipo de contrato", store=True, required=True)
+    # x_contract_file = fields.Binary(
+    #     string="Contrato de referencia", store=True)
+    x_contract_type = fields.Selection([('hola','hola')])
+    x_contract_type_2 = fields.Many2one(
+            'custom.contract_types',
+            string="Tipo de contrato",
+            ondelete="set null",
+            store=True,
+            domain=[('name', '!=', 'Particular')])
+    # x_contract_type_2 = fields.Selection(
+    #     selection=_populate_choices,
+    #     string="Tipo de contrato", store=True, required=True)
     x_is_new = fields.Selection(
-        [('fibra','Solo Fibra'), ('portabilidad', 'Portabilidad'), ('nueva', 'Alta Nueva')],
-        string="Tipo de número", store=True)
+        [('portabilidad', 'Portabilidad'), ('nueva', 'Alta Nueva')],
+        string="Tipo de número", store=True, required=True)
 
 
     x_ba_control = fields.Char(string="Dígito de Control", store=True, required=True, size=2)
@@ -110,6 +117,25 @@ class Lead(models.Model):
         string="Líneas Adicionales",
         store=True)
 
+    @api.onchange('x_operator_tramit')
+    def onchange_x_operator_tramit(self):
+        b ={'domain': {'x_contract_type_2': []}}
+        _logger.warning('\n\n{}\n\n'.format(self.x_operator_tramit.name))
+        if self.x_operator_tramit.name == 'Vodafone Micro':
+            b={'domain': {'x_contract_type_2': [('name', '!=', 'Particular')]}}
+        return b
+    # def _populate_choices(self):
+    #     for record in self:
+    #         choices = [('autonomo','Autónomo'), ('empresa', 'Empresa')]
+    #         if record['x_operator_tramit'] != 'Vodafone Micro':
+    #             choices += [('particular', 'Particular')]
+    #
+    #     return self
+
+class ContractTypes(models.Model):
+    _name = "custom.contract_types"
+
+    name = fields.Char('Nombre', required=True, store=True)
 
 class PhoneLines(models.Model):
     _name = 'custom.phone_line'

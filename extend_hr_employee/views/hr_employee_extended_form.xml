@@ -1,0 +1,106 @@
+<odoo>
+	<record id="hr_employee_extended_form_view" model="ir.ui.view">
+	    <field name="name">hr.employee.form</field>
+	    <field name="model">hr.employee</field>
+		<field name="groups_id" eval="[(6, 0, [ref('hr.group_hr_user')])]"/>
+	    <field name="inherit_id" ref="hr.view_employee_form"/>
+	    <field name="arch" type="xml">
+
+<!-- OCULTANDO CAMPOS BASE -->
+			<xpath expr="//field[@name='category_ids']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//notebook" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+
+
+
+			<xpath expr="//field[@name='category_ids']" position="after">
+<!-- DIRECCION -->
+				<group string="Dirección">
+					<field name="hr_employee_private_address" />
+					<field name="hr_employee_private_address_2" />
+					<field name="hr_employee_private_address_localidad" />
+					<field name="hr_employee_private_address_provincia" />
+					<field name="hr_employee_private_address_zip" />
+				</group>
+<!-- FECHA NACIMIENTO -->
+				<group string="Datos personales">
+					<field name="birthday" />
+	<!-- NIF -->
+					<field name="hr_employee_nif" />
+	<!-- NSS -->
+					<field name="hr_employee_nss" />
+				</group>
+				<group string="Datos de contacto">
+<!-- TELEFONO EMPRESA -->
+					<field name="work_phone" />
+	<!-- 1 TELEFONO PARTICULAR -->
+					<field name="hr_employee_private_phone_1" />
+	<!-- 2 TELEFONO PARTICULAR -->
+					<field name="hr_employee_private_phone_2" />
+	<!-- EMAIL CONTACTO -->
+					<field name="hr_employee_private_email" />
+	<!-- PERSONA CONTACTO -->
+					<field name="hr_employee_contact_name" />
+					<field name="hr_employee_contact_phone" />
+				</group>
+
+				<group string="Cuenta bancaria">
+<!-- IBAN -->
+					<field name="hr_employee_iban" />
+				</group>
+<!-- CATEGORIA LABORAL -->
+
+				<group string="Información laboral">
+					<field name="hr_employee_category" />
+	<!-- ESPECIALIDAD LABORAL -->
+					<field name="hr_employee_expertise" />
+	<!-- FORMACION PRL -->
+					<field name="hr_employee_formation" />
+	<!-- FECHA ULTIMO CONTRATO -->
+					<field name="hr_employee_last_contract_date" />
+	<!-- TIPO CONTRATO EN VIGOR -->
+					<field name="hr_employee_contract_type" />
+				</group>
+
+				<group string="Material">
+<!-- TALLAS ROPA LABORAL -->
+					<field name="hr_employee_clothes_size" />
+	<!-- FECHA ENTREGA -->
+					<field name="hr_employee_date_trousers" />
+					<field name="hr_employee_date_jacket" />
+					<field name="hr_employee_date_shirt_ml" />
+					<field name="hr_employee_date_shirt_mc" />
+					<field name="hr_employee_date_shoes" />
+				</group>
+				<group>
+<!-- FECHA RECONOCIMIENTO -->
+					<field name="hr_employee_date_recon" />
+				</group>
+
+				<group string="Precios por hora">
+<!-- SUELDO HORAS EXTRA E INCENTIVO -->
+					<field name="timesheet_cost" string="Precio por hora" />
+					<field name="hr_employee_salary" />
+					<field name="hr_employee_salary_extra" />
+					<field name="hr_employee_salary_festive" />
+					<field name="hr_employee_salary_saturday" />
+				</group>
+
+				<group string="Salarios y vacaciones">
+					<field name="hr_employee_salary_fix_plus" />
+	<!-- PRORRATEO -->
+					<field name="hr_employee_salary_prorrate" />
+	<!-- IMPUESTO SS -->
+					<field name="hr_employee_salary_ss" />
+	<!-- N HORAS EXTRA -->
+					<field name="hr_employee_extra_hours" />
+	<!-- VACACIONES -->
+					<field name="hr_employee_holidays" />
+				</group>
+			</xpath>
+		</field>
+	</record>
+</odoo>

@@ -1,0 +1,119 @@
+<odoo>
+
+	<!-- EDIT VIEW FOR COLLABORATORS -->
+	<record id="lead_extension_collaborator_bank_account" model="ir.ui.view">
+	    <field name="name">crm.lead.lead_extension_collaborator.lead_extension_collaborator_bank_account</field>
+	    <field name="model">crm.lead</field>
+	    <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+	    <field name="arch" type="xml">
+
+
+				<!-- <group col="6" colspan="2">
+					<label for="x_ba_iban"/>
+					<label for="x_ba_entity"/>
+					<label for="x_ba_sucursal"/>
+					<label for="x_ba_control"/>
+					<label for="x_ba_number" colspan="2"/>
+
+					<field name="x_ba_iban" nolabel="1"/>
+					<field name="x_ba_entity" nolabel="1"/>
+					<field name="x_ba_sucursal" nolabel="1"/>
+					<field name="x_ba_control" nolabel="1"/>
+					<field name="x_ba_number" nolabel="1" colspan="2"/>
+				</group> -->
+
+				<xpath expr="//field[@name='x_ba_iban']" position="attributes">
+					<attribute name="colspan">0</attribute>
+				</xpath>
+				<xpath expr="//label[@for='x_ba_entity']" position="attributes">
+					<attribute name="string">C.C.C</attribute>
+				</xpath>
+				<xpath expr="//label[@for='x_ba_sucursal']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//label[@for='x_ba_control']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//label[@for='x_ba_number']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="//field[@name='x_ba_entity']" position="attributes">
+					<attribute name="colspan">0</attribute>
+				</xpath>
+				<xpath expr="//field[@name='x_ba_sucursal']" position="attributes">
+					<attribute name="colspan">0</attribute>
+				</xpath>
+				<xpath expr="//field[@name='x_ba_control']" position="attributes">
+					<attribute name="colspan">0</attribute>
+				</xpath>
+				<xpath expr="//field[@name='x_ba_number']" position="attributes">
+					<attribute name="colspan">0</attribute>
+				</xpath>
+				<xpath expr="//field[@name='x_ba_number']" position="after">
+					<field name="x_ba_number_2" nolabel="1"/>
+				</xpath>
+
+				<xpath expr="//field[@name='x_ba_number_2']" position="after">
+					<field name="x_ba_full" nolabel="1" invisible="1" readonly="1" colspan="6"/>
+				</xpath>
+
+
+		</field>
+	</record>
+
+
+
+	<!-- CUSTOM VIEW FOR VALIDATORS -->
+	<!-- SHOULD ADAPT GROUPS CSV -->
+	<record id="lead_extension_validator_bank_account" model="ir.ui.view">
+	    <field name="name">crm.lead.lead_extension_validator.lead_extension_validator_bank_account</field>
+	    <field name="model">crm.lead</field>
+		<field name="groups_id" eval="[(6, 0, [ref('__export__.res_groups_17_879d2718')])]"/>
+	    <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+	    <field name="arch" type="xml">
+			<xpath expr="//field[@name='x_ba_iban']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='x_ba_entity']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//label[@for='x_ba_entity']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='x_ba_sucursal']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='x_ba_control']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='x_ba_number']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='x_ba_number_2']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='x_ba_full']" position="attributes">
+				<attribute name="invisible">0</attribute>
+			</xpath>
+
+		</field>
+	</record>
+
+
+
+	<!-- CUSTOM VIEW FOR ADMIN -->
+	<record id="lead_extension_admin_bank_account" model="ir.ui.view">
+		<field name="name">crm.lead.lead_extension_admin.lead_extension_admin_bank_account</field>
+		<field name="model">crm.lead</field>
+		<field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]"/>
+		<field name="inherit_id" ref="crm.crm_lead_view_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='x_ba_full']" position="attributes">
+				<attribute name="invisible">0</attribute>
+			</xpath>
+		</field>
+	</record>
+
+
+
+</odoo>
