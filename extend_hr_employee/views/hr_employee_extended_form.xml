@@ -82,23 +82,28 @@
 
 				<group string="Precios por hora">
 <!-- SUELDO HORAS EXTRA E INCENTIVO -->
-					<field name="timesheet_cost" string="Precio por hora" />
-					<field name="hr_employee_salary" />
 					<field name="hr_employee_salary_extra" />
+					<field name="hr_employee_salary_special" />
 					<field name="hr_employee_salary_festive" />
 					<field name="hr_employee_salary_saturday" />
 				</group>
 
 				<group string="Salarios y vacaciones">
 					<field name="hr_employee_salary_fix_plus" />
+					<field name="hr_employee_salary_extra_payments" />
 	<!-- PRORRATEO -->
 					<field name="hr_employee_salary_prorrate" />
 	<!-- IMPUESTO SS -->
-					<field name="hr_employee_salary_ss" />
+					<!-- <field name="hr_employee_salary_ss" /> -->
 	<!-- N HORAS EXTRA -->
-					<field name="hr_employee_extra_hours" />
+					<!-- <field name="hr_employee_extra_hours" /> -->
 	<!-- VACACIONES -->
-					<field name="hr_employee_holidays" />
+					<field name="hr_employee_holidays">
+						<tree editable='top'>
+							<field name='start_date' />
+							<field name='end_date' />
+						</tree>
+					</field>
 				</group>
 			</xpath>
 		</field>

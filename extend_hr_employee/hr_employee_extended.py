@@ -1,6 +1,15 @@
 # -*- coding: utf-8 -*-
 from odoo import fields, models
 
+class WokerHolidays(models.Model):
+
+    _name = 'custom.worker_holidays'
+
+    related_employee = fields.Many2one('hr.employee', string='Empleado asociado', ondelete='set null', stored=True)
+    start_date = fields.Date(string='Fecha de inicio', stored=True)
+    end_date = fields.Date(string='Fecha de fin', stored=True)
+
+
 class Partner(models.Model):
     _inherit = 'hr.employee'
 
@@ -41,15 +50,17 @@ class Partner(models.Model):
     hr_employee_date_recon = fields.Date(string='Fecha de último reconocimiento', store=True)
 #SUELDO
     currency_id = fields.Many2one('res.currency', default=lambda self: self.env.ref('base.EUR'))
-    hr_employee_salary = fields.Char(string="Sueldo", store=True)
-    timesheet_cost = fields.Monetary(string="Precio por Hora", store=True)
+    # timesheet_cost = fields.Monetary(string="Precio por Hora", store=True)
     hr_employee_salary_extra = fields.Monetary(string="Precio por Hora extra", store=True)
+    hr_employee_salary_special = fields.Monetary(string="Precio por Hora especial", store=True)
     hr_employee_salary_festive = fields.Monetary(string="Precio por Hora festiva", store=True)
     hr_employee_salary_saturday = fields.Monetary(string="Precio por Hora sábado", store=True)
     hr_employee_salary_fix_plus = fields.Monetary(string="Incentivo fijo", store=True)
     hr_employee_salary_prorrate = fields.Char(string="Prorrateo pagas extra", store=True)
-    hr_employee_salary_ss = fields.Monetary(string="Impuesto seguridad social", store=True)
+    # hr_employee_salary_ss = fields.Monetary(string="Impuesto seguridad social", store=True)
+    hr_employee_salary_extra_payments = fields.Monetary(string="Pagas extra", store=True)
 
 #HORAS EXTRA
-    hr_employee_extra_hours = fields.(string="Número de horas extra", store=True)
-    hr_employee_holidays = fields.Char(string="Vacaciones", store=True)
+    # hr_employee_extra_hours = fields.(string="Número de horas extra", store=True)
+
+    hr_employee_holidays = fields.One2many('custom.worker_holidays', 'related_employee', string="Vacaciones", store=True)

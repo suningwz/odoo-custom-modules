@@ -21,8 +21,8 @@
 ##############################################################################
 {
     'name': "Update product cost on vendor bill",
-    'summary': """This module udate product cost price on vendor bill validation. 
-               Don't use this module if you use Odoo's dsfault costing methods     
+    'summary': """This module udate product cost price on vendor bill validation.
+               Don't use this module if you use Odoo's dsfault costing methods
                """,
     'version': '10.0.1.0.0',
     'description': """
@@ -32,7 +32,8 @@
     'company': 'Aurium Technologies',
     'website': "http://www.auriumtechnologies.com",
     'category': 'product',
-    'depends': ['base', 'account'],
+    'depends': ['base', 'account', 'product'],
+    'data': ['static/product_price_extended.xml']
     'images': ['static/description/banner.png'],
     'installable': True,
     'auto_install': False,

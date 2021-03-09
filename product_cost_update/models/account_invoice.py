@@ -20,8 +20,7 @@
 #
 ##############################################################################
 from odoo import api, models, fields
-import logging
-_logger = logging.getLogger(__name__)
+from datetime import datetime
 
 
 class AccountInvoice(models.Model):
@@ -31,17 +30,43 @@ class AccountInvoice(models.Model):
     @api.multi
     def invoice_validate(self):
 
-    	product_obj = self.env['product.product']
+        product_obj = self.env['product.product']
         # call the super methd here
-        res = super(AccountInvoice, self).invoice_validate()
+        res = super(AccountInvoice, self).invoice_validate())\
         for invoice in self:
             if invoice.type in ('in_invoice', 'in_refund'):
-                _logger.warning('\n\n{}\n\n'.format(self.partner_id))
                 for line in invoice.invoice_line_ids:
-                    _logger.warning('\n\n{}\n\n'.format(line))
                     if line.product_id and line.price_unit:
                         pr_id = product_obj.browse(line.product_id.id)
-                        pr_id.write({'standard_price': line.price_unit})
+                        if pr_id.standard_price != line.price_unit:
+                            pr_data = {
+                                'standard_price': line.price_unit,
+                                'x_current_supplier': self.partner_id.id,
+                                'x_current_date': datetime.today(),
+
+                                'x_old_price_1_supplier': pr_id.x_current_supplier.id,
+                                'x_old_price_1_price': pr_id.standard_price,
+                                'x_old_price_1_date': pr_id.x_current_date,
+
+                                'x_old_price_2_supplier': pr_id.x_old_price_1_supplier.id,
+                                'x_old_price_2_price': pr_id.x_old_price_1_price,
+                                'x_old_price_2_date': pr_id.x_old_price_1_date,
+
+                                'x_old_price_3_supplier': pr_id.x_old_price_2_supplier.id,
+                                'x_old_price_3_price': pr_id.x_old_price_2_price,
+                                'x_old_price_3_date': pr_id.x_old_price_2_date,
+                            }
+
+                            lst_price = pr_data['standard_price']
+                            vals = 1
+                            for i in range(1,4):
+                                if pr_data['x_old_price_{}_price'.format(i)]:
+                                    lst_price += pr_data['x_old_price_{}_price'.format(i)]
+                                    vals += 1
+
+                            pr_data['lst_price'] = lst_price / vals
+
+                            pr_id.write(pr_data)
 
         #return self.write({'state':'open'})
         return res
