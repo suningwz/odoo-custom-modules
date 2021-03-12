@@ -54,9 +54,6 @@
 			</xpath>
 
 
-			<xpath expr="//button[@name='action_schedule_meeting']" position="before">
-					<field name="user_id" readonly="1"/>
-			</xpath>
 
 			<xpath expr="//group" position="inside">
 				<group colspan="2">
@@ -68,7 +65,7 @@
 					<field name="x_charge_zone" />
 					<field name="x_address_id" />
 					<field name="x_contract_type_2" required="1" widget="selection"/>
-					<field name="x_contract_type" required="1" widget="selection"/>
+					<field name="x_contract_type" widget="selection" invisible="1"/>
 				</group>
 
 
@@ -156,13 +153,20 @@
 					<field name="x_port_name" attrs="{'invisible': [('x_port_new', '!=', True)], 'required': [('x_port_new', '=', True)]}"/>
 				</group>
 
-
 				<group colspan="2">
-					<field name="x_dni_back" />
+					<field name="x_is_new_mobile" attrs="{'invisible':[('x_internet_speed','not in',(6,7,8))], 'required':[('x_internet_speed','in',(6,7,8))]}"/>
+
+					<field name="x_port_number_mobile" attrs="{'invisible': [('x_is_new_mobile', '!=', 'portabilidad')], 'required': [('x_is_new_mobile', '=', 'portabilidad')]}"/>
+					<field name="x_port_operator_mobile" attrs="{'invisible': [('x_is_new_mobile', '!=', 'portabilidad')], 'required': [('x_is_new_mobile', '=', 'portabilidad')]}"/>
+					<field name="x_port_new_mobile" attrs="{'invisible': [('x_is_new_mobile', '!=', 'portabilidad')]}"/>
+					<field name="x_port_nif_mobile" attrs="{'invisible': [('x_port_new_mobile', '!=', True)], 'required': [('x_port_new_mobile', '=', True)]}"/>
+					<field name="x_port_name_mobile" attrs="{'invisible': [('x_port_new_mobile', '!=', True)], 'required': [('x_port_new_mobile', '=', True)]}"/>
 				</group>
 
 
-				<group colspan="2">
+
+
+				<group colspan="2" attrs="{'invisible':[('x_internet_speed','not in',(6,7,8))]}">
 					<label for="x_lines_phone" />
 				</group>
 				<field name="x_lines_phone" nolabel="1" attrs="{'invisible':[('x_internet_speed','not in',(6,7,8))]}">
@@ -180,6 +184,9 @@
 					</tree>
 				</field>
 
+				<group colspan="2">
+					<field name="x_dni_back" />
+				</group>
 
 			</xpath>
 
@@ -196,6 +203,20 @@
 		<field name="groups_id" eval="[(6, 0, [ref('__export__.res_groups_17_879d2718')])]"/>
 	    <field name="inherit_id" ref="crm.crm_lead_view_form"/>
 	    <field name="arch" type="xml">
+
+			<xpath expr="//button[@name='action_schedule_meeting']" position="before">
+				<button colspan='2' name="action_assign" string="Yo me encargo" type="object" class="oe_highlight" attrs="{'invisible':[('x_assigned_to','!=',False)]}"/>
+				<div class="oe_button_box">
+					<field colspan='2' name="x_assigned_to" readonly="True" attrs="{'invisible':[('x_assigned_to','=',False)]}" widget="many2one_avatar_user"/>
+				</div>
+				<div class="oe_button_box">
+					<field colspan='2' name="user_id" readonly="1"/>
+				</div>
+			</xpath>
+
+
+
+
 			<field name="name" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
@@ -329,9 +350,26 @@
 			<field name="x_port_nif" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_dni_back" position="attributes">
+
+			<field name="x_is_new_mobile" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
+			<field name="x_port_number_mobile" position="attributes">
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_port_operator_mobile" position="attributes">
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_port_new_mobile" position="attributes">
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_port_name_mobile" position="attributes">
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_port_nif_mobile" position="attributes">
+				<attribute name="readonly">1</attribute>
+			</field>
+
 			<field name="x_dni_back" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>

@@ -66,7 +66,25 @@ class Lead(models.Model):
     #     string="Tipo de contrato", store=True, required=True)
     x_is_new = fields.Selection(
         [('portabilidad', 'Portabilidad'), ('nueva', 'Alta Nueva')],
-        string="Tipo de número", store=True, required=True)
+        string="Fijo a portar", store=True, required=True)
+
+
+    x_is_new_mobile =  fields.Selection(
+        [('portabilidad', 'Portabilidad'), ('nueva', 'Alta Nueva')],
+        string="Móvil a portar", store=True, required=True)
+
+    x_port_number_mobile = fields.Char(
+        string="Número a portar", store=True)
+    x_port_operator_mobile = fields.Char(
+        string="Oerador Donante", store=True)
+    x_port_new_mobile = fields.Boolean(
+        string="Diferente Titular", store=True,
+        help="Marca esta casilla si el titular de la línea a portar es diferente")
+    x_port_name_mobile = fields.Char(
+        string="Nombre completo del titular", store=True)
+    x_port_nif_mobile = fields.Char(
+        string="NIF del titular", store=True)
+
 
 
     x_ba_control = fields.Char(string="Dígito de Control", store=True, required=True, size=2)
@@ -90,6 +108,7 @@ class Lead(models.Model):
         string="Velocidad de internet",
         ondelete="set null",
         store=True)
+
     x_internet_speed_status = fields.Selection(
         [('CANCELACION', 'CANCELACION CLIENTE KO COMERCIAL'), ('FIANZA', 'FIANZA'), ('PROGRAMADO', 'PROGRAMADO'), ('ERROR', 'ERROR PORTABILIDAD FIJO'), ('PDTEPROGRAMAR', 'PDTE DE PROGRAMAR'), ('PDTEAPORTAR DOC PARA E7', 'PDTE DE APORTAR DOC PARA E7'), ('IUAE', 'FALTA IUAE'), ('ILOCALIZABLE', 'ILOCALIZABLE')],
         string="Estado", store=True)
@@ -116,6 +135,54 @@ class Lead(models.Model):
         'x_lead_id',
         string="Líneas Adicionales",
         store=True)
+
+
+    x_virgin_phone = fields.Selection(
+        [('conmigo', 'Fijo Conmigo'), ('ilimitado', 'Ilimitado'), ('sinllamada', 'Sin Llamadas')])
+
+    x_virgin_tv = fields.Many2many(
+        [('conmigo', 'Fijo Conmigo'), ('ilimitado', 'Ilimitado'), ('sinllamada', 'Sin Llamadas')])
+
+    x_virgin_internet_speed = fields.Many2one(
+        'custom.virgin_internet_speed',
+        string="Velocidad de internet",
+        ondelete="set null",
+        store=True)
+
+    x_virgin_mobile_phone = fields.Many2one(
+        'custom.virgin_mobile_phone',
+        string="Móvil",
+        ondelete="set null",
+        store=True)
+
+    x_virgin_tv = fields.Many2one(
+        'custom..virgin_tv',
+        string="Móvil",
+        ondelete="set null",
+        store=True)
+
+
+
+
+
+    x_assigned_to = fields.Many2one(
+        'res.users',
+        string="Asignado a",
+        ondelete='set null',
+        store=True)
+
+
+    def action_assign(self):
+        self.update({'x_assigned_to':self.env.user.id})
+        return True
+
+
+    def action_next_step(self):
+        self.update({'x_assigned_to':self.env.user.id})
+        return True
+
+
+
 
     @api.onchange('x_operator_tramit')
     def onchange_x_operator_tramit(self):
@@ -192,6 +259,30 @@ class OperatorTramit(models.Model):
 class InternetSpeed(models.Model):
     _name = 'custom.internet_speed'
     _description = 'Velocidades de Internet'
+
+    name = fields.Char(string='Nombre', store=True)
+    code = fields.Char(string='Código Interno', store=True)
+
+# VIRGIN
+class VirginInternetSpeed(models.Model):
+    _name = 'custom.virgin_internet_speed'
+    _description = 'Velocidades de Internet'
+
+    name = fields.Char(string='Nombre', store=True)
+    code = fields.Char(string='Código Interno', store=True)
+
+
+class VirginMobilePhone(models.Model):
+    _name = 'custom.virgin_mobile_phone'
+    _description = 'Móvil'
+
+    name = fields.Char(string='Nombre', store=True)
+    code = fields.Char(string='Código Interno', store=True)
+
+
+class VirginTV(models.Model):
+    _name = 'custom.virgin_tv'
+    _description = 'Televisión'
 
     name = fields.Char(string='Nombre', store=True)
     code = fields.Char(string='Código Interno', store=True)
