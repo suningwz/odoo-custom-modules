@@ -56,7 +56,7 @@ class Partner(models.Model):
     hr_employee_salary_festive = fields.Monetary(string="Precio por Hora festiva", store=True)
     hr_employee_salary_saturday = fields.Monetary(string="Precio por Hora sábado", store=True)
     hr_employee_salary_fix_plus = fields.Monetary(string="Incentivo fijo", store=True)
-    hr_employee_salary_prorrate = fields.Char(string="Prorrateo pagas extra", store=True)
+    hr_employee_salary_holidays = fields.Char(string="Pagas de vacaciones", store=True)
     # hr_employee_salary_ss = fields.Monetary(string="Impuesto seguridad social", store=True)
     hr_employee_salary_extra_payments = fields.Monetary(string="Pagas extra", store=True)
 

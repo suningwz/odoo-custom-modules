@@ -1,0 +1,31 @@
+<odoo>
+	<record id="res_users_adapted_form" model="ir.ui.view">
+	    <field name="name">res.users.simplified.form</field>
+	    <field name="model">res.users</field>
+	    <field name="inherit_id" ref="base.view_users_simple_form"/>
+	    <field name="arch" type="xml">
+
+<!-- OCULTANDO CAMPOS BASE -->
+			<xpath expr="//group" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+
+
+
+			<xpath expr="//group" position="after">
+				<label for="password" />
+				<field name="password" />
+
+				<group>
+					<field name="in_group_61" />
+					<field name="in_group_63" />
+					<field name="in_group_64" />
+					<field name="in_group_62" />
+				</group>
+
+			</xpath>
+
+		</field>
+	</record>
+
+</odoo>

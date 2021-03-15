@@ -13,6 +13,10 @@
 			<xpath expr="//notebook" position="attributes">
 				<attribute name="invisible">1</attribute>
 			</xpath>
+			<xpath expr="//field[@name='name']" position="after" >
+				<label for="user_id" class="oe_edit_only"/>
+				<h2><field name="user_id" placeholder="Usuario relacionado"/></h2>
+			</xpath>
 
 
 
@@ -92,7 +96,7 @@
 					<field name="hr_employee_salary_fix_plus" />
 					<field name="hr_employee_salary_extra_payments" />
 	<!-- PRORRATEO -->
-					<field name="hr_employee_salary_prorrate" />
+					<field name="hr_employee_salary_holidays" />
 	<!-- IMPUESTO SS -->
 					<!-- <field name="hr_employee_salary_ss" /> -->
 	<!-- N HORAS EXTRA -->

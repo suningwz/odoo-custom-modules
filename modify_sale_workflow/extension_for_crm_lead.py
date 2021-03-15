@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models
-#
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
+import re
 import logging
+#
 _logger = logging.getLogger(__name__)
 #
 class Lead(models.Model):
@@ -26,7 +28,7 @@ class Lead(models.Model):
     x_cif = fields.Char(
         string="CIF", store=True)
     x_client_name = fields.Char(
-        string="Nombre del cliente", store=True, required=True)
+        string="Nombre del cliente", store=True)
     x_company_name = fields.Char(
         string="Nombre de la empresa", store=True)
     x_dni_back = fields.Char(
@@ -71,7 +73,7 @@ class Lead(models.Model):
 
     x_is_new_mobile =  fields.Selection(
         [('portabilidad', 'Portabilidad'), ('nueva', 'Alta Nueva')],
-        string="Móvil a portar", store=True, required=True)
+        string="Móvil a portar", store=True)
 
     x_port_number_mobile = fields.Char(
         string="Número a portar", store=True)
@@ -87,11 +89,17 @@ class Lead(models.Model):
 
 
 
-    x_ba_control = fields.Char(string="Dígito de Control", store=True, required=True, size=2)
-    x_ba_entity = fields.Char(string="Entidad", store=True, required=True, size=4)
-    x_ba_sucursal = fields.Char(string="Sucursal", store=True, required=True, size=4)
-    x_ba_number = fields.Char(string="Número de Cuenta", store=True, required=True, size=10)
     x_ba_iban = fields.Char(string="IBAN", store=True, required=True, size=4)
+    x_ba_entity = fields.Char(string="C.C.C", store=True, required=True, size=4)
+    x_ba_sucursal = fields.Char(string="C.C.C", store=True, required=True, size=4)
+    x_ba_control = fields.Char(string="C.C.C", store=True, required=True, size=4)
+    x_ba_number = fields.Char(string="C.C.C", store=True, required=True, size=4)
+    x_ba_number_2 = fields.Char(string="C.C.C", store=True, required=True, size=4)
+
+
+
+    x_ba_full = fields.Char(string="IBAN", store=True, size=29)
+
 
 
 
@@ -114,6 +122,9 @@ class Lead(models.Model):
         string="Estado", store=True)
 
 
+    x_mobile_rate = fields.Selection(
+        [('mini', 'Tarifa Mini'), ('extra', 'Tarifa Extra'), ('ilimitada', 'Tarifa Ilimitada'), ('super', 'Tarifa Ilimitada Super'), ('total', 'Tarifa Ilimitada Total')],
+        string="Tarifa Móvil", store=True)
 
     x_one_pro = fields.Many2many(
         'custom.one_pro',
@@ -138,10 +149,9 @@ class Lead(models.Model):
 
 
     x_virgin_phone = fields.Selection(
-        [('conmigo', 'Fijo Conmigo'), ('ilimitado', 'Ilimitado'), ('sinllamada', 'Sin Llamadas')])
-
-    x_virgin_tv = fields.Many2many(
-        [('conmigo', 'Fijo Conmigo'), ('ilimitado', 'Ilimitado'), ('sinllamada', 'Sin Llamadas')])
+        [('conmigo', 'Fijo Conmigo'), ('ilimitado', 'Ilimitado'), ('sinllamada', 'Sin Llamadas')],
+        string="Teléfono fijo",
+        store=True)
 
     x_virgin_internet_speed = fields.Many2one(
         'custom.virgin_internet_speed',
@@ -156,8 +166,8 @@ class Lead(models.Model):
         store=True)
 
     x_virgin_tv = fields.Many2one(
-        'custom..virgin_tv',
-        string="Móvil",
+        'custom.virgin_tv',
+        string="Televisión",
         ondelete="set null",
         store=True)
 
@@ -171,17 +181,77 @@ class Lead(models.Model):
         ondelete='set null',
         store=True)
 
+    def _check_iban(self, iban):
+        pattern = '[A-Z]{2}[0-9]{22}'
+        return re.match(pattern, iban.replace(' ',''))
+
+
+    def write(self, vals):
+        iban = ''
+        for elem in ['x_ba_iban' ,'x_ba_entity' ,'x_ba_sucursal' ,'x_ba_control' ,'x_ba_number' ,'x_ba_number_2']:
+            if elem in vals:
+                iban += vals[elem] + ' '
+            else:
+                iban += self[elem] + ' '
+        iban = iban[:-1].upper()
+        if not self._check_iban(iban):
+            raise ValidationError(_('El IBAN introducido no es válido.'))
+
+        vals['x_ba_full'] = iban
+
+        return super(Lead, self).write(vals)
+
+
+    def next_stage(self, stage):
+        stages = {
+            '1':[9,False],
+            '9':[7,True],
+            '7':[8,False],
+            '8':[6,True],
+            '6':[4,False],
+        }
+        return stages[str(stage)]
 
     def action_assign(self):
-        self.update({'x_assigned_to':self.env.user.id})
+        if self.x_assigned_to:
+            raise ValidationError(_('La carga ya ha sido asignada.'))
+
+        if self.stage_id.id == 1:
+            self.update({'x_assigned_to':self.env.user.id, 'stage_id':9})
+        if self.stage_id.id != 1:
+            self.update({'x_assigned_to':self.env.user.id})
+
         return True
 
 
     def action_next_step(self):
-        self.update({'x_assigned_to':self.env.user.id})
-        return True
+        if self.x_assigned_to != self.env.user:
+            raise ValidationError(_('No se te ha asignado esta carga.'))
+        stage, assignable = self.next_stage(self.stage_id.id)
+        if assignable:
+            self.sudo().update({'x_assigned_to':False, 'stage_id':stage})
+        else:
+            self.sudo().update({'stage_id':stage})
+
+        tree_view_id = self.env.ref('crm.crm_case_tree_view_oppor').id
+        return {
+            'name': _('Cargas'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'crm.lead',
+            'views': [[False, "tree"], [False,"form"]]
+            'view_id': tree_view_id,
+            'target':'main'
+        }
 
 
+    @api.model
+    def create(self, vals):
+        iban = '{} {} {} {} {} {}'.format(vals['x_ba_iban'].upper(), vals['x_ba_entity'], vals['x_ba_sucursal'], vals['x_ba_control'], vals['x_ba_number'], vals['x_ba_number_2'])
+        if not self._check_iban(iban):
+            raise ValidationError(_('El IBAN introducido no es válido.'))
+
+        vals['x_ba_full'] = iban
+        return super(Lead, self).create(vals)
 
 
     @api.onchange('x_operator_tramit')
@@ -218,6 +288,11 @@ class PhoneLines(models.Model):
     x_rate = fields.Selection(
         [('mini', 'Tarifa Mini'), ('extra', 'Tarifa Extra'), ('ilimitada', 'Tarifa Ilimitada'), ('super', 'Tarifa Ilimitada Super'), ('total', 'Tarifa Ilimitada Total')],
         string="Tarifa", store=True)
+    x_virgin_mobile_phone = fields.Many2one(
+        'custom.virgin_mobile_phone',
+        string="Tarifa",
+        ondelete='set null',
+        store=True)
     x_status = fields.Selection(
         [('activa', 'ACTIVA'), ('ko', 'KO DUDA COMERCIAL'), ('error', 'RECHAZO - ERROR DE PORTABILIDAD'), ('nostock', 'SIN STOCK TERMINAL'), ('tramite', 'PORTABILIDA EN TRÁMITE')],
         string="Estado", store=True)

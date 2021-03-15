@@ -8,10 +8,10 @@ class Lead(models.Model):
 
     x_ba_iban = fields.Char(string="IBAN", store=True, required=True, size=4)
     x_ba_entity = fields.Char(string="C.C.C", store=True, required=True, size=4)
-    x_ba_sucursal = fields.Char(string=" ", store=True, required=True, size=4)
-    x_ba_control = fields.Char(string=" ", store=True, required=True, size=4)
-    x_ba_number = fields.Char(string=" ", store=True, required=True, size=4)
-    x_ba_number_2 = fields.Char(string=" ", store=True, required=True, size=4)
+    x_ba_sucursal = fields.Char(string="C.C.C", store=True, required=True, size=4)
+    x_ba_control = fields.Char(string="C.C.C", store=True, required=True, size=4)
+    x_ba_number = fields.Char(string="C.C.C", store=True, required=True, size=4)
+    x_ba_number_2 = fields.Char(string="C.C.C", store=True, required=True, size=4)
 
 
 
@@ -22,7 +22,7 @@ class Lead(models.Model):
         return re.match(pattern, iban.replace(' ',''))
 
     @api.model
-    def create(self):
+    def create(self, vals):
         iban = '{} {} {} {} {} {}'.format(vals['x_ba_iban'].upper(), vals['x_ba_entity'], vals['x_ba_sucursal'], vals['x_ba_control'], vals['x_ba_number'], vals['x_ba_number_2'])
         if not self.check_iban(iban):
             raise ValidationError(_('El IBAN introducido no es válido.'))

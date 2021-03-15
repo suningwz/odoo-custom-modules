@@ -71,19 +71,19 @@
 
 
 				<group colspan="2">
-					<field name="x_cif" attrs="{'required': [('x_contract_type_2', '=', 'empresa')], 'invisible':  [('x_contract_type_2', '!=', 'empresa')]}" />
-					<field name="x_company_name" attrs="{'required': [('x_contract_type_2', '=', 'empresa')], 'invisible':  [('x_contract_type_2', '!=', 'empresa')]}" />
-					<field name="x_nss" attrs="{'invisible':  [('x_contract_type_2', '!=', 'autonomo')]}" />
+					<field name="x_cif" attrs="{'required': [('x_contract_type_2', '=', (3))], 'invisible':  [('x_contract_type_2', '!=', (3))]}" />
+					<field name="x_company_name" attrs="{'required': [('x_contract_type_2', '=', (3))], 'invisible':  [('x_contract_type_2', '!=', (3))]}" />
+					<field name="x_nss" attrs="{'invisible':  [('x_contract_type_2', '!=', (1))]}" />
 					<!-- <field name="x_contract_file" /> -->
 				</group>
 
 
 				<group colspan="2">
-					<field name="x_nif" attrs="{'required': [('x_contract_type_2', '!=', 'empresa')], 'invisible': [('x_contract_type_2', '=', 'empresa')]}"/>
-					<field name="x_client_name" attrs="{'required': [('x_contract_type_2', '!=', 'empresa')], 'invisible': [('x_contract_type_2', '=', 'empresa')]}"/>
+					<field name="x_nif" attrs="{'required': [('x_contract_type_2', '!=', (3))], 'invisible': [('x_contract_type_2', '=', (3))]}"/>
+					<field name="x_client_name" attrs="{'required': [('x_contract_type_2', '!=', (3))], 'invisible': [('x_contract_type_2', '=', (3))]}"/>
 
-					<field name="x_aut_nif" attrs="{'required': [('x_contract_type_2', '=', 'empresa')], 'invisible': [('x_contract_type_2', '!=', 'empresa')]}"/>
-					<field name="x_aut_name" attrs="{'required': [('x_contract_type_2', '=', 'empresa')], 'invisible': [('x_contract_type_2', '!=', 'empresa')]}"/>
+					<field name="x_aut_nif" attrs="{'required': [('x_contract_type_2', '=', (3))], 'invisible': [('x_contract_type_2', '!=', (3))]}"/>
+					<field name="x_aut_name" attrs="{'required': [('x_contract_type_2', '=', (3))], 'invisible': [('x_contract_type_2', '!=', (3))]}"/>
 
 					<field name="phone" string="Teléfono de contacto"/>
 					<field name="x_phone_2" />
@@ -103,36 +103,42 @@
 				</group>
 
 
+
+
 				<group col="6" colspan="2">
 					<label for="x_ba_iban"/>
-					<label for="x_ba_entity"/>
-					<label for="x_ba_sucursal"/>
-					<label for="x_ba_control"/>
-					<label for="x_ba_number" colspan="2"/>
+					<label for="x_ba_entity" colspan="5"/>
 
 					<field name="x_ba_iban" nolabel="1"/>
 					<field name="x_ba_entity" nolabel="1"/>
 					<field name="x_ba_sucursal" nolabel="1"/>
 					<field name="x_ba_control" nolabel="1"/>
-					<field name="x_ba_number" nolabel="1" colspan="2"/>
+					<field name="x_ba_number" nolabel="1"/>
+					<field name="x_ba_number_2" nolabel="1"/>
 				</group>
 
 
 
+
+
+
+
 				<group colspan="2">
-					<field name="x_internet_speed" />
+					<field name="x_internet_speed" attrs="{'invisible':[('x_operator_tramit','=',(3))]}"/>
+					<field name="x_virgin_internet_speed" attrs="{'invisible':[('x_operator_tramit','!=',(3))]}"/>
 					<field name="x_internet_speed_status" readonly="1"/>
 				</group>
 
 
-				<group colspan="2">
+				<group colspan="2"  attrs="{'invisible':[('x_operator_tramit','=',(3))]}">
 					<field name="x_one_pro" widget="many2many_checkboxes"/>
 					<field name="x_one_pro_status" readonly="1" />
 				</group>
 
 
 				<group colspan="2">
-					<field name="x_tv" widget="many2many_checkboxes"/>
+					<field name="x_tv" widget="many2many_checkboxes" attrs="{'invisible':[('x_operator_tramit','=',(3))]}"/>
+					<field name="x_virgin_tv" widget="many2many_checkboxes" attrs="{'invisible':[('x_operator_tramit','!=',(3))]}"/>
 					<field name="x_tv_status" readonly="1" />
 				</group>
 
@@ -145,7 +151,7 @@
 
 				<group colspan="2">
 					<field name="x_is_new" />
-
+					<field name="x_virgin_phone"  attrs="{'invisible':[('x_operator_tramit','!=',(3))]}"/>
 					<field name="x_port_number" attrs="{'invisible': [('x_is_new', '!=', 'portabilidad')], 'required': [('x_is_new', '=', 'portabilidad')]}"/>
 					<field name="x_port_operator" attrs="{'invisible': [('x_is_new', '!=', 'portabilidad')], 'required': [('x_is_new', '=', 'portabilidad')]}"/>
 					<field name="x_port_new" attrs="{'invisible': [('x_is_new', '!=', 'portabilidad')]}"/>
@@ -153,9 +159,19 @@
 					<field name="x_port_name" attrs="{'invisible': [('x_port_new', '!=', True)], 'required': [('x_port_new', '=', True)]}"/>
 				</group>
 
-				<group colspan="2">
+				<group colspan="2" attrs="{'invisible':[('x_operator_tramit','=',(3))]}">
 					<field name="x_is_new_mobile" attrs="{'invisible':[('x_internet_speed','not in',(6,7,8))], 'required':[('x_internet_speed','in',(6,7,8))]}"/>
+					<field name="x_mobile_rate" attrs="{'invisible':[('x_internet_speed','not in',(6,7,8))], 'required':[('x_internet_speed','in',(6,7,8))]}"/>
+					<field name="x_port_number_mobile" attrs="{'invisible': [('x_is_new_mobile', '!=', 'portabilidad')], 'required': [('x_is_new_mobile', '=', 'portabilidad')]}"/>
+					<field name="x_port_operator_mobile" attrs="{'invisible': [('x_is_new_mobile', '!=', 'portabilidad')], 'required': [('x_is_new_mobile', '=', 'portabilidad')]}"/>
+					<field name="x_port_new_mobile" attrs="{'invisible': [('x_is_new_mobile', '!=', 'portabilidad')]}"/>
+					<field name="x_port_nif_mobile" attrs="{'invisible': [('x_port_new_mobile', '!=', True)], 'required': [('x_port_new_mobile', '=', True)]}"/>
+					<field name="x_port_name_mobile" attrs="{'invisible': [('x_port_new_mobile', '!=', True)], 'required': [('x_port_new_mobile', '=', True)]}"/>
+				</group>
 
+				<group colspan="2" attrs="{'invisible':[('x_operator_tramit','!=',(3))]}">
+					<field name="x_is_new_mobile" />
+					<field name="x_virgin_mobile_phone" />
 					<field name="x_port_number_mobile" attrs="{'invisible': [('x_is_new_mobile', '!=', 'portabilidad')], 'required': [('x_is_new_mobile', '=', 'portabilidad')]}"/>
 					<field name="x_port_operator_mobile" attrs="{'invisible': [('x_is_new_mobile', '!=', 'portabilidad')], 'required': [('x_is_new_mobile', '=', 'portabilidad')]}"/>
 					<field name="x_port_new_mobile" attrs="{'invisible': [('x_is_new_mobile', '!=', 'portabilidad')]}"/>
@@ -165,11 +181,10 @@
 
 
 
-
-				<group colspan="2" attrs="{'invisible':[('x_internet_speed','not in',(6,7,8))]}">
+				<group colspan="2" attrs="{'invisible':['|', ('x_internet_speed','not in',(6,7,8)), ('x_operator_tramit','=',(3))]}">
 					<label for="x_lines_phone" />
 				</group>
-				<field name="x_lines_phone" nolabel="1" attrs="{'invisible':[('x_internet_speed','not in',(6,7,8))]}">
+				<field name="x_lines_phone" nolabel="1" attrs="{'invisible':['|', ('x_internet_speed','not in',(6,7,8)), ('x_operator_tramit','=',(3))]}">
 					<tree editable="top">
 						<field name="x_status" readonly="1"/>
 						<field name="x_name" />
@@ -205,12 +220,16 @@
 	    <field name="arch" type="xml">
 
 			<xpath expr="//button[@name='action_schedule_meeting']" position="before">
-				<button colspan='2' name="action_assign" string="Yo me encargo" type="object" class="oe_highlight" attrs="{'invisible':[('x_assigned_to','!=',False)]}"/>
-				<div class="oe_button_box">
-					<field colspan='2' name="x_assigned_to" readonly="True" attrs="{'invisible':[('x_assigned_to','=',False)]}" widget="many2one_avatar_user"/>
+				<group attrs="{'invisible':[('x_assigned_to','!=',False), ('stage_id','=',(4))]}">
+					<button colspan="2" name="action_assign" string="Yo me encargo" type="object" class="oe_highlight" attrs="{'invisible':[('x_assigned_to','!=',False)]}"/>
+				</group>
+				<div attrs="{'invisible':[('x_assigned_to','=',False)]}">
+					<label for="x_assigned_to" />
+					<field colspan="2" name="x_assigned_to" readonly="True" widget="many2one_avatar_user"/>
 				</div>
-				<div class="oe_button_box">
-					<field colspan='2' name="user_id" readonly="1"/>
+				<div>
+					<label for="user_id" string="Colaborador"/>
+					<field colspan="2" name="user_id" readonly="1"/>
 				</div>
 			</xpath>
 
@@ -269,27 +288,59 @@
 			<field name="x_aut_nif" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
+			<field name="x_virgin_phone" position="attributes">
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_virgin_mobile_phone" position="attributes">
+				<attribute name="readonly">1</attribute>
+			</field>
+			<field name="x_virgin_tv" position="attributes">
+				<attribute name="readonly">1</attribute>
+				<attribute name="widget">one2many_list</attribute>
+			</field>
+			<field name="x_virgin_internet_speed" position="attributes">
+				<attribute name="readonly">1</attribute>
+			</field>
+
 			<field name="x_aut_name" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
 			<field name="x_phone_2" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
-			<field name="x_ba_number" position="attributes">
-				<attribute name="readonly">1</attribute>
-			</field>
-			<field name="x_ba_iban" position="attributes">
-				<attribute name="readonly">1</attribute>
-			</field>
-			<field name="x_ba_entity" position="attributes">
-				<attribute name="readonly">1</attribute>
-			</field>
-			<field name="x_ba_sucursal" position="attributes">
-				<attribute name="readonly">1</attribute>
-			</field>
-			<field name="x_ba_control" position="attributes">
-				<attribute name="readonly">1</attribute>
-			</field>
+
+
+			<xpath expr="//label[@for='x_ba_iban']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='x_ba_iban']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='x_ba_entity']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//label[@for='x_ba_entity']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='x_ba_sucursal']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='x_ba_control']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='x_ba_number']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='x_ba_number_2']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='x_ba_number_2']" position="after">
+				<field name='x_ba_full' readonly="1" colspan="6" />
+			</xpath>
+
+
+
+
 
 			<field name="x_internet_speed" position="attributes">
 				<attribute name="readonly">1</attribute>
@@ -354,6 +405,9 @@
 			<field name="x_is_new_mobile" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
+			<field name="x_mobile_rate" position="attributes">
+				<attribute name="readonly">1</attribute>
+			</field>
 			<field name="x_port_number_mobile" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</field>
@@ -378,7 +432,7 @@
 			</field>
 
 			<field name="x_lines_phone" position="attributes">
-				<attribute name="options">{'create': False}</attribute>
+				<attribute name="options">{'create': False, 'delete': False}</attribute>
 			</field>
 			<xpath expr="//field[@name='stage_id']" position="attributes">
 					<attribute name="invisible">0</attribute>
@@ -397,13 +451,13 @@
 				<attribute name="readonly">1</attribute>
 			</xpath>
 			<xpath expr="//tree/field[@name='x_is_prepaid']" position="attributes">
-				<attribute name="readonly">1</attribute>
+				<attribute name="invisible">1</attribute>
 			</xpath>
 			<xpath expr="//tree/field[@name='x_icc']" position="attributes">
 				<attribute name="readonly">1</attribute>
 			</xpath>
 			<xpath expr="//tree/field[@name='x_different_partner']" position="attributes">
-				<attribute name="readonly">1</attribute>
+				<attribute name="invisible">1</attribute>
 			</xpath>
 			<xpath expr="//tree/field[@name='x_titular']" position="attributes">
 				<attribute name="readonly">1</attribute>
@@ -413,6 +467,10 @@
 			</xpath>
 			<xpath expr="//tree/field[@name='x_aspod']" position="attributes">
 				<attribute name="readonly">1</attribute>
+			</xpath>
+
+			<xpath expr="//notebook" position="after">
+				<button colspan="2" name="action_next_step" string="Fase tramitada" type="object" class="oe_highlight" attrs="{'invisible':['|',('x_assigned_to','=',False), ('stage_id','=',(4))]}"/>
 			</xpath>
 		</field>
 	</record>
@@ -431,6 +489,11 @@
 				<attribute name="invisible">0</attribute>
 				<attribute name="widget">one2many_checkboxes</attribute>
 			</field>
+
+			<xpath expr="//field[@name='x_ba_number_2']" position="after">
+				<field name='x_ba_full' readonly="1"/>
+			</xpath>
+
 			<xpath expr="//field[@name='stage_id']" position="attributes">
 					<attribute name="invisible">0</attribute>
 					<attribute name="readonly">0</attribute>
@@ -441,12 +504,17 @@
 			  <xpath expr="//field[@name='x_internet_speed']" position="attributes">
 				<attribute name="widget">one2many_checkboxes</attribute>
 			  </xpath>
+			  <xpath expr="//field[@name='x_virgin_tv']" position="attributes">
+				<attribute name="widget">one2many_checkboxes</attribute>
+			  </xpath>
 			  <xpath expr="//field[@name='x_one_pro']" position="attributes">
 				<attribute name="widget">one2many_checkboxes</attribute>
 			  </xpath>
 			  <xpath expr="//field[@name='x_tv']" position="attributes">
 				<attribute name="widget">one2many_checkboxes</attribute>
 			  </xpath>
+
+
 		 </field>
 	</record>
 

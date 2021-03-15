@@ -6,9 +6,6 @@ class AccountInvoice(models.Model):
 
     _inherit = 'product.template'
 
-    x_current_supplier = fields.Many2one('res.partner', string='Proveedor actual', stored=True, ondelete='set null')
-    x_current_date = fields.Date(string="Fecha de compra", stored=True)
-
     x_old_price_1_supplier = fields.Many2one('res.partner', string="Proveedor", stored=True, ondelete='set null')
     x_old_price_1_price = fields.Float(string="Precio", stored=True)
     x_old_price_1_date = fields.Date(string="Fecha", stored=True)
