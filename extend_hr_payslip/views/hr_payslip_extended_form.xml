@@ -1,0 +1,65 @@
+<odoo>
+	<record id="hr_payslip_extended_form_view" model="ir.ui.view">
+		<field name="name">hr.payslip.form</field>
+		<field name="model">hr.payslip</field>
+		<field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+		<field name="arch" type="xml">
+
+			<!-- OCULTANDO CAMPOS BASE -->
+			<xpath expr="//header" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+
+			<xpath expr="//field[@name='contract_id']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='number']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='name']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='struct_id']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='credit_note']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+
+			<xpath expr="//notebook" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+
+			<xpath expr="//group" position="after">
+				<group string="Desglose">
+					<field name="x_brute"/>
+					<field name="x_ss"/>
+					<field name="x_prorrate"/>
+					<field name="x_prorrate_vacations"/>
+					<field name="x_incentive" />
+				</group>
+				<group col="6" readonly="1">
+					<field name="x_worked_hours" colspan="5" widget="float_time" readonly="1"/>
+
+					<field name="x_worked_extra" widget="float_time" readonly="1"/>
+					<field name="x_worked_extra_price" readonly="1"/>
+					<field name="x_worked_extra_total" readonly="1"/>
+					<field name="x_worked_special" widget="float_time" readonly="1"/>
+					<field name="x_worked_special_price" readonly="1"/>
+					<field name="x_worked_special_total" readonly="1"/>
+					<field name="x_worked_holiday" widget="float_time" readonly="1"/>
+					<field name="x_worked_holiday_price" readonly="1"/>
+					<field name="x_worked_holiday_total" readonly="1"/>
+					<field name="x_worked_saturday" widget="float_time" readonly="1"/>
+					<field name="x_worked_saturday_price" readonly="1"/>
+					<field name="x_worked_saturday_total" readonly="1"/>
+
+				</group>
+				<group>
+					<field name="x_cost_per_hour" readonly="1"/>
+					<field name="x_payslip_total" readonly="1"/>
+				</group>
+			</xpath>
+		</field>
+	</record>
+</odoo>

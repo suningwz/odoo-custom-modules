@@ -7,7 +7,7 @@
 	        <xpath expr="//page" position="after">
 				<page string="Movimientos asociados" attrs="{'invisible': [('partner_id', '=', False)]}">
 					<field name="related_stock_moves" widget="many2many" options="{'no_create': True}" domain="['&amp;', ('state','=','done'), ('picking_partner_id','=',context.get('partner_id')), '&amp;', ('x_invoice_id','=',False)]" attrs="{'readonly':[('state','not in',('draft',))]}">
-					  <tree>
+					  <tree decoration-bf="x_invoice_line != False" decoration-success="x_invoice_line != False">
 						<field name="state" invisible="1"/>
 						<field name="date" />
 						<field name="picking_partner_id" invisible="1"/>
@@ -15,6 +15,7 @@
 						<field name="product_id" />
 						<field name="product_uom_qty" string="Cantidad" />
 						<field name="product_uom" />
+						<field name="x_invoice_line" invisible="1"/>
 					  </tree>
 					</field>
 					<button name="action_add_lines" string="Añadir a factura" type="object" class="oe_highlight" states="draft"/>

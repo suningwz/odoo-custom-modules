@@ -86,6 +86,7 @@
 
 				<group string="Precios por hora">
 <!-- SUELDO HORAS EXTRA E INCENTIVO -->
+					<field name="hr_employee_daily_hours" widget="float_time"/>
 					<field name="hr_employee_salary_extra" />
 					<field name="hr_employee_salary_special" />
 					<field name="hr_employee_salary_festive" />
