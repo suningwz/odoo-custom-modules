@@ -1,0 +1,12 @@
+<odoo>
+	<record id="import_for_budget_button" model="ir.ui.view">
+	    <field name="name">product.template.import_for_budget</field>
+	    <field name="model">product.template</field>
+	    <field name="inherit_id" ref="##ID DE LA VISTA"/>
+	    <field name="arch" type="xml">
+	        <xpath expr="//button[@name='##BOTON IMPORTAR']" position="after">
+                <button name="import_products_bc3" string="Importar BC3" type="object" class="oe_highlight"/>
+	        </xpath>
+		</field>
+	</record>
+</odoo>
