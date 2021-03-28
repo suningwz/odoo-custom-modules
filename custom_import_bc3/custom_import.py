@@ -29,15 +29,15 @@ class Import(models.TransistentModel):
                     # Precio de coste
                     'price': '',
                     # Nombre mostrado
-                    'name': '',
+                    'name': ''
                     # Unidad de medida ID
-                    'uom_id': 1,
+                    # 'uom_id': 1,
                     # Descripcion TEXTO PLANO
-                    'description': '',
+                    # 'description': '',
                     # Categria interna ID
-                    'categ_id': 1,
+                    # 'categ_id': 1,
                     # Lista de materiales ID (+ adelante)
-                    'bom_ids': False,
+                    # 'bom_ids': False,
                 }
                 created_product = self.env['product.template'].sudo().create(rec)
                 _logger.warning('\ncreated \n{}\n'.format(created_product))
@@ -54,21 +54,4 @@ class Import(models.TransistentModel):
     # def import_products_bc3(self):
         # No sabría como llamar al import pero puede que sea tan facil como usar
         # res_import = super(Import, self).do(fields, options, dryrun)
-        # pass
-
-
-        #
-        # rec = {
-        #     'name': vals['name'],
-        #     'alias_contact': 'employees',
-        #     'privacy_visibility': 'employees',
-        #     'allow_timesheets': 'True',
-        #     'label_tasks': 'obra'
-        # }
-        #
-        # if vals['partner_id']: rec['partner_id'] = vals['partner_id']
-        # project_obj = self.env['project.project'].sudo().create(rec)
-        #
-        # vals['related_project_id'] = project_obj.id
-        #
-        # return super(Warehouse, self).create(vals)
+        # return True
