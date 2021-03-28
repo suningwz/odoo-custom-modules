@@ -8,7 +8,7 @@ _logger = logging.getLogger(__name__)
 
 
 ## OP1: Sobreescribe la funcion import
-class Import(models.TransistentModel):
+class Import(Models.TransistentModel):
     _inherit = 'base_import.import'
 
 # Añade funcionalidades a la función import
