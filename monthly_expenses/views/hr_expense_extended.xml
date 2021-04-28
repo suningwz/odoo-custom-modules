@@ -1,0 +1,211 @@
+<odoo>
+
+	<record id="hr_expense_extension" model="ir.ui.view">
+	    <field name="name">hr.expense.hr_expense_extension</field>
+	    <field name="model">hr.expense</field>
+	    <field name="inherit_id" ref="hr_expense.hr_expense_form_view"/>
+	    <field name="arch" type="xml">
+
+			<xpath expr="//button[@name='action_set_won_rainbowman']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//button[@name='163']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//button[@name='164']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='stage_id']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//button[@name='action_schedule_meeting']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//label[@for='name'][2]" position="attributes">
+					<attribute name="string">Comercial</attribute>
+			</xpath>
+			<xpath expr="//h2" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//group[@name='lead_partner']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//group[@name='opportunity_partner']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='date_deadline']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='priority']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='tag_ids']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='user_id']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='team_id']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//page[@name='lead']" position="attributes">
+					<attribute name="invisible">1</attribute>
+			</xpath>
+
+
+
+			<xpath expr="//group" position="inside">
+				<group colspan="2">
+					<field name="x_operator_tramit" invisible="1"/>
+				</group>
+
+				<group colspan="2">
+					<field name="x_charge_code" />
+					<field name="x_charge_zone" />
+					<field name="x_address_id" />
+					<field name="x_contract_type_2" required="1" widget="selection"/>
+					<field name="x_contract_type" widget="selection" invisible="1"/>
+				</group>
+
+
+
+				<group colspan="2">
+					<field name="x_cif" attrs="{'required': [('x_contract_type_2', '=', (3))], 'invisible':  [('x_contract_type_2', '!=', (3))]}" />
+					<field name="x_company_name" attrs="{'required': [('x_contract_type_2', '=', (3))], 'invisible':  [('x_contract_type_2', '!=', (3))]}" />
+					<field name="x_nss" attrs="{'invisible':  [('x_contract_type_2', '!=', (1))]}" />
+					<!-- <field name="x_contract_file" /> -->
+				</group>
+
+
+				<group colspan="2">
+					<field name="x_nif" attrs="{'required': [('x_contract_type_2', '!=', (3))], 'invisible': [('x_contract_type_2', '=', (3))]}"/>
+					<field name="x_client_name" attrs="{'required': [('x_contract_type_2', '!=', (3))], 'invisible': [('x_contract_type_2', '=', (3))]}"/>
+
+					<field name="x_aut_nif" attrs="{'required': [('x_contract_type_2', '=', (3))], 'invisible': [('x_contract_type_2', '!=', (3))]}"/>
+					<field name="x_aut_name" attrs="{'required': [('x_contract_type_2', '=', (3))], 'invisible': [('x_contract_type_2', '!=', (3))]}"/>
+
+					<field name="phone" string="Teléfono de contacto"/>
+					<field name="x_phone_2" />
+					<field name="email_from" />
+				</group>
+
+
+				<group colspan="2">
+					<label for="street" string="Dirección"/>
+                        <div  class="o_address_format customaddress">
+                            <field name="street" placeholder="Calle" class="o_address_street"/>
+                            <field name="street2" placeholder="Calle 2" class="o_address_street"/>
+                            <field name="city" placeholder="Ciudad" class="o_address_city"/>
+                            <field name="state_id" class="o_address_state" placeholder="Provincia" options="{'no_open': True}"/>
+                            <field name="zip" placeholder="C.P." class="o_address_zip"/>
+                        </div>
+				</group>
+
+
+
+
+				<group col="6" colspan="2">
+					<label for="x_ba_iban"/>
+					<label for="x_ba_entity" colspan="5"/>
+
+					<field name="x_ba_iban" nolabel="1"/>
+					<field name="x_ba_entity" nolabel="1"/>
+					<field name="x_ba_sucursal" nolabel="1"/>
+					<field name="x_ba_control" nolabel="1"/>
+					<field name="x_ba_number" nolabel="1"/>
+					<field name="x_ba_number_2" nolabel="1"/>
+				</group>
+
+
+
+
+
+
+
+				<group colspan="2">
+					<field name="x_internet_speed" attrs="{'invisible':[('x_operator_tramit','=',(3))]}"/>
+					<field name="x_virgin_internet_speed" attrs="{'invisible':[('x_operator_tramit','!=',(3))]}"/>
+					<field name="x_internet_speed_status" readonly="1"/>
+				</group>
+
+
+				<group colspan="2"  attrs="{'invisible':[('x_operator_tramit','=',(3))]}">
+					<field name="x_one_pro" widget="many2many_checkboxes"/>
+					<field name="x_one_pro_status" readonly="1" />
+				</group>
+
+
+				<group colspan="2">
+					<field name="x_tv" widget="many2many_checkboxes" attrs="{'invisible':[('x_operator_tramit','=',(3))]}"/>
+					<field name="x_virgin_tv" widget="many2many_checkboxes" attrs="{'invisible':[('x_operator_tramit','!=',(3))]}"/>
+					<field name="x_tv_status" readonly="1" />
+				</group>
+
+
+				<group colspan="2">
+					<field name="x_promo" />
+					<field name="x_promo_price" />
+				</group>
+
+
+				<group colspan="2">
+					<field name="x_is_new" />
+					<field name="x_virgin_phone"  attrs="{'invisible':[('x_operator_tramit','!=',(3))]}"/>
+					<field name="x_port_number" attrs="{'invisible': [('x_is_new', '!=', 'portabilidad')], 'required': [('x_is_new', '=', 'portabilidad')]}"/>
+					<field name="x_port_operator" attrs="{'invisible': [('x_is_new', '!=', 'portabilidad')], 'required': [('x_is_new', '=', 'portabilidad')]}"/>
+					<field name="x_port_new" attrs="{'invisible': [('x_is_new', '!=', 'portabilidad')]}"/>
+					<field name="x_port_nif" attrs="{'invisible': [('x_port_new', '!=', True)], 'required': [('x_port_new', '=', True)]}"/>
+					<field name="x_port_name" attrs="{'invisible': [('x_port_new', '!=', True)], 'required': [('x_port_new', '=', True)]}"/>
+				</group>
+
+				<group colspan="2" attrs="{'invisible':[('x_operator_tramit','=',(3))]}">
+					<field name="x_is_new_mobile" attrs="{'invisible':[('x_internet_speed','not in',(6,7,8))], 'required':[('x_internet_speed','in',(6,7,8))]}"/>
+					<field name="x_mobile_rate" attrs="{'invisible':[('x_internet_speed','not in',(6,7,8))], 'required':[('x_internet_speed','in',(6,7,8))]}"/>
+					<field name="x_port_number_mobile" attrs="{'invisible': [('x_is_new_mobile', '!=', 'portabilidad')], 'required': [('x_is_new_mobile', '=', 'portabilidad')]}"/>
+					<field name="x_port_operator_mobile" attrs="{'invisible': [('x_is_new_mobile', '!=', 'portabilidad')], 'required': [('x_is_new_mobile', '=', 'portabilidad')]}"/>
+					<field name="x_port_new_mobile" attrs="{'invisible': [('x_is_new_mobile', '!=', 'portabilidad')]}"/>
+					<field name="x_port_nif_mobile" attrs="{'invisible': [('x_port_new_mobile', '!=', True)], 'required': [('x_port_new_mobile', '=', True)]}"/>
+					<field name="x_port_name_mobile" attrs="{'invisible': [('x_port_new_mobile', '!=', True)], 'required': [('x_port_new_mobile', '=', True)]}"/>
+				</group>
+
+				<group colspan="2" attrs="{'invisible':[('x_operator_tramit','!=',(3))]}">
+					<field name="x_is_new_mobile" />
+					<field name="x_virgin_mobile_phone" />
+					<field name="x_port_number_mobile" attrs="{'invisible': [('x_is_new_mobile', '!=', 'portabilidad')], 'required': [('x_is_new_mobile', '=', 'portabilidad')]}"/>
+					<field name="x_port_operator_mobile" attrs="{'invisible': [('x_is_new_mobile', '!=', 'portabilidad')], 'required': [('x_is_new_mobile', '=', 'portabilidad')]}"/>
+					<field name="x_port_new_mobile" attrs="{'invisible': [('x_is_new_mobile', '!=', 'portabilidad')]}"/>
+					<field name="x_port_nif_mobile" attrs="{'invisible': [('x_port_new_mobile', '!=', True)], 'required': [('x_port_new_mobile', '=', True)]}"/>
+					<field name="x_port_name_mobile" attrs="{'invisible': [('x_port_new_mobile', '!=', True)], 'required': [('x_port_new_mobile', '=', True)]}"/>
+				</group>
+
+
+
+				<group colspan="2" attrs="{'invisible':['|', ('x_internet_speed','not in',(6,7,8)), ('x_operator_tramit','=',(3))]}">
+					<label for="x_lines_phone" />
+				</group>
+				<field name="x_lines_phone" nolabel="1" attrs="{'invisible':['|', ('x_internet_speed','not in',(6,7,8)), ('x_operator_tramit','=',(3))]}">
+					<tree editable="top">
+						<field name="x_status" readonly="1"/>
+						<field name="x_name" />
+						<field name="x_rate" />
+						<field name="x_terminal" />
+						<field name="x_is_prepaid" />
+						<field name="x_icc" attrs="{'invisible': [('x_is_prepaid', '!=', True)], 'required': [('x_is_prepaid', '=', True)]}"/>
+						<field name="x_different_partner" />
+						<field name="x_titular" attrs="{'invisible': [('x_different_partner', '!=', True)], 'required': [('x_different_partner', '=', True)]}"/>
+						<field name="x_nif" attrs="{'invisible': [('x_different_partner', '!=', True)], 'required': [('x_different_partner', '=', True)]}"/>
+						<field name="x_aspod" />
+					</tree>
+				</field>
+
+				<group colspan="2">
+					<field name="x_dni_back" />
+				</group>
+
+			</xpath>
+
+		</field>
+	</record>
+
+
+</odoo>

@@ -71,16 +71,16 @@
 
 
 				<group colspan="2">
-					<field name="x_cif" attrs="{'required': [('x_contract_type_2', '=', (3))], 'invisible':  [('x_contract_type_2', '!=', (3))]}" />
 					<field name="x_company_name" attrs="{'required': [('x_contract_type_2', '=', (3))], 'invisible':  [('x_contract_type_2', '!=', (3))]}" />
+					<field name="x_cif" attrs="{'required': [('x_contract_type_2', '=', (3))], 'invisible':  [('x_contract_type_2', '!=', (3))]}" />
 					<field name="x_nss" attrs="{'invisible':  [('x_contract_type_2', '!=', (1))]}" />
 					<!-- <field name="x_contract_file" /> -->
 				</group>
 
 
 				<group colspan="2">
-					<field name="x_nif" attrs="{'required': [('x_contract_type_2', '!=', (3))], 'invisible': [('x_contract_type_2', '=', (3))]}"/>
 					<field name="x_client_name" attrs="{'required': [('x_contract_type_2', '!=', (3))], 'invisible': [('x_contract_type_2', '=', (3))]}"/>
+					<field name="x_nif" attrs="{'required': [('x_contract_type_2', '!=', (3))], 'invisible': [('x_contract_type_2', '=', (3))]}"/>
 
 					<field name="x_aut_nif" attrs="{'required': [('x_contract_type_2', '=', (3))], 'invisible': [('x_contract_type_2', '!=', (3))]}"/>
 					<field name="x_aut_name" attrs="{'required': [('x_contract_type_2', '=', (3))], 'invisible': [('x_contract_type_2', '!=', (3))]}"/>
@@ -125,7 +125,7 @@
 
 				<group colspan="2">
 					<field name="x_internet_speed" attrs="{'invisible':[('x_operator_tramit','=',(3))]}"/>
-					<field name="x_virgin_internet_speed" attrs="{'invisible':[('x_operator_tramit','!=',(3))]}"/>
+					<field name="x_virgin_internet_speed" attrs="{'invisible':[('x_operator_tramit','!=',(3))]}" options="{'no_open': True}"/>
 					<field name="x_internet_speed_status" invisible="1" readonly="1"/>
 				</group>
 
@@ -151,12 +151,12 @@
 
 				<group colspan="2">
 					<field name="x_is_new" />
-					<field name="x_virgin_phone"  attrs="{'invisible':['|', ('x_operator_tramit','!=',(3)), ('x_is_new', '=', False)]}"/>
+					<field name="x_virgin_phone" options="{'no_open': True}" attrs="{'invisible':['|', ('x_operator_tramit','!=',(3)), ('x_is_new', '=', False)]}"/>
 					<field name="x_port_number" attrs="{'invisible': [('x_is_new', '!=', 'portabilidad')], 'required': [('x_is_new', '=', 'portabilidad')]}"/>
 					<field name="x_port_operator" attrs="{'invisible': [('x_is_new', '!=', 'portabilidad')], 'required': [('x_is_new', '=', 'portabilidad')]}"/>
 					<field name="x_port_new" attrs="{'invisible': [('x_is_new', '!=', 'portabilidad')]}"/>
-					<field name="x_port_nif" attrs="{'invisible': [('x_port_new', '!=', True)], 'required': [('x_port_new', '=', True)]}"/>
 					<field name="x_port_name" attrs="{'invisible': [('x_port_new', '!=', True)], 'required': [('x_port_new', '=', True)]}"/>
+					<field name="x_port_nif" attrs="{'invisible': [('x_port_new', '!=', True)], 'required': [('x_port_new', '=', True)]}"/>
 				</group>
 <!--
 				<group colspan="2" attrs="{'invisible':[('x_operator_tramit','=',(3))]}">
@@ -181,12 +181,12 @@
 				<group colspan="2">
 					<field name="x_is_new_mobile" />
 					<field name="x_mobile_rate" attrs="{'invisible':['|', ('x_internet_speed','not in',(6,7,8)), ('x_operator_tramit','=',(3))], 'required':[('x_internet_speed','in',(6,7,8))]}"/>
-					<field name="x_virgin_mobile_phone" attrs="{'invisible':['|', ('x_operator_tramit','!=',(3)), ('x_is_new_mobile', '=', False)]}"/>
+					<field name="x_virgin_mobile_phone" attrs="{'invisible':['|', ('x_operator_tramit','!=',(3)), ('x_is_new_mobile', '=', False)]}" options="{'no_open': True}"/>
 					<field name="x_port_number_mobile" attrs="{'invisible': [('x_is_new_mobile', '!=', 'portabilidad')], 'required': [('x_is_new_mobile', '=', 'portabilidad')]}"/>
 					<field name="x_port_operator_mobile" attrs="{'invisible': [('x_is_new_mobile', '!=', 'portabilidad')], 'required': [('x_is_new_mobile', '=', 'portabilidad')]}"/>
 					<field name="x_port_new_mobile" attrs="{'invisible': [('x_is_new_mobile', '!=', 'portabilidad')]}"/>
-					<field name="x_port_nif_mobile" attrs="{'invisible': [('x_port_new_mobile', '!=', True)], 'required': [('x_port_new_mobile', '=', True)]}"/>
 					<field name="x_port_name_mobile" attrs="{'invisible': [('x_port_new_mobile', '!=', True)], 'required': [('x_port_new_mobile', '=', True)]}"/>
+					<field name="x_port_nif_mobile" attrs="{'invisible': [('x_port_new_mobile', '!=', True)], 'required': [('x_port_new_mobile', '=', True)]}"/>
 				</group>
 
 
@@ -197,7 +197,7 @@
 				</group>
 				<field name="x_lines_phone" nolabel="1" attrs="{'invisible':[('x_internet_speed','not in',(6,7,8)), ('x_operator_tramit','!=',(3))]}">
 					<tree editable="top">
-						<field name="x_status" readonly="1"/>
+						<field name="x_status" invisible="1"/>
 						<field name="x_name" />
 						<field name="x_rate" invisible="context.get('x_operator_tramit') != 3"/>
 						<field name="x_virgin_mobile_phone" invisible="context.get('x_operator_tramit') == 3"/>
@@ -207,7 +207,7 @@
 						<field name="x_different_partner" />
 						<field name="x_titular" attrs="{'invisible': [('x_different_partner', '!=', True)], 'required': [('x_different_partner', '=', True)]}"/>
 						<field name="x_nif" attrs="{'invisible': [('x_different_partner', '!=', True)], 'required': [('x_different_partner', '=', True)]}"/>
-						<field name="x_aspod" />
+						<field name="x_aspod" invisible="context.get('x_operator_tramit') == 3" />
 					</tree>
 				</field>
 
@@ -226,7 +226,7 @@
 							<field name="operator" invisible="1" readonly="1"/>
 							<field name="type_parent" invisible="1" readonly="1"/>
 							<field name="loaded" invisible="1" readonly="1"/>
-							<field name="recording_date" readonly="1"/>
+							<field name="recording_date" readonly="1" widget="date"/>
 							<field name="status_parent" readonly="1"/>
 							<field name="status_comment" readonly="1"/>
 							<field name="effective_date" readonly="1"/>
@@ -240,6 +240,10 @@
 							<field name="code" invisible="1" readonly="1"/>
 						</tree>
 					</field>
+				</group>
+
+				<group>
+					<field name="x_status_error" readonly="1" attrs="{'invisible': [('x_status_error','=',False)]}"/>
 				</group>
 
 
@@ -509,8 +513,17 @@
 				<attribute name="readonly">1</attribute>
 			</xpath>
 
+			<xpath expr="//field[@name='x_status_error']" position="attributes">
+				<attribute name="readonly">0</attribute>
+				<attribute name="invisible">'stage_id.id' == 4</attribute>
+			</xpath>
+
 			<xpath expr="//notebook" position="after">
-				<button colspan="2" name="action_next_step" string="Siguiente fase" type="object" class="oe_highlight" attrs="{'invisible':['|',('x_assigned_to','=',False), ('stage_id','=',(4))]}"/>
+				<group col='6'>
+					<button colspan="2" name="return_to_quality" string="Devolver a comercial" type="object" class="oe_highlight" attrs="{'invisible':['|', ('x_status_error','=',False), ('stage_id','!=',(8))]}"/>
+					<button colspan="2" name="action_next_step" string="Siguiente fase" type="object" class="oe_highlight" attrs="{'invisible':['|',('x_assigned_to','=',False), ('stage_id','in',(10, 4))]}"/>
+					<button colspan="2" name="ko_comercial" string="KO Comercial" type="object" class="btn btn-danger" attrs="{'invisible':[('stage_id','in',(1,4))]}"/>
+				</group>
 			</xpath>
 		</field>
 	</record>

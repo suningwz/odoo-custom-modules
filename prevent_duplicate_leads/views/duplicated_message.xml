@@ -1,0 +1,27 @@
+<odoo>
+	<record id="duplicated_message" model="ir.ui.view">
+		<field name="name">crm.lead.duplicated_message</field>
+		<field name="model">crm.lead</field>
+		<field name="groups_id" eval="[(6, 0, [ref('__export__.res_groups_17_879d2718')])]"/>
+		<field name="inherit_id" ref="crm.crm_lead_view_form"/>
+		<field name="arch" type="xml">
+
+			<xpath expr="//header" position="after">
+				<field name="duplicated_nif" invisible='1'/>
+				<div class="alert alert-warning" role="alert" attrs="{'invisible':[('duplicated_nif','=',False)]}">
+			        <strong>Este NIF ya aparece en las siguientes cargas: </strong>
+			        <field name="duplicated_records" nolabel="1">
+			          <tree>
+			            <field name="create_date" widget='date'/>
+			            <field name="user_id"/>
+			            <field name="x_client_name"/>
+			            <field name="stage_id"/>
+			          </tree>
+			        </field>
+			    </div>
+			</xpath>
+
+		</field>
+	</record>
+
+</odoo>
